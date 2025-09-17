@@ -53,3 +53,6 @@ Smoker Bankは、自分が吸ったタバコの本数を簡単に記録できる
 - データベース（PostgreSQL）
 - デプロイ先（Render）
 - 使用予定のGem（ransack / kaminari / Tailwind / line-bot-sdk-ruby / Devise / omniauth-google-oauth2）
+
+## 画面遷移図
+[画面遷移図（Figma）](https://www.figma.com/design/oS8wTW6u0WIxZXqUt9bmDp/smoker-bank?node-id=0-1&t=X7aWSsd2NaSFdeJh-1)
