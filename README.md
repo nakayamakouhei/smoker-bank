@@ -57,3 +57,6 @@ Smoker Bankは、自分が吸ったタバコの本数を簡単に記録できる
 
 ## 画面遷移図
 [画面遷移図（Figma）](https://www.figma.com/design/oS8wTW6u0WIxZXqUt9bmDp/smoker-bank?node-id=0-1&t=X7aWSsd2NaSFdeJh-1)
+
+## ER図
+![ER図](assets/images/er_diagram.png)
