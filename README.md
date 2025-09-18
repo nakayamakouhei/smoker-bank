@@ -47,9 +47,13 @@ Smoker Bankは、自分が吸ったタバコの本数を簡単に記録できる
 ## 機能候補(拡張機能)
 - LINE通知機能  
 - ユーザーオリジナルの「もし買えたもの」リストの作成機能  
+- ユーザー情報の変更画面  
 
 ## 使用する技術スタック
 - 使用するフレームワーク（Ruby on Rails / 8.0.2.1 以上 8.1 未満）
 - データベース（PostgreSQL）
 - デプロイ先（Render）
 - 使用予定のGem（ransack / kaminari / Tailwind / line-bot-sdk-ruby / Devise / omniauth-google-oauth2）
+
+## 画面遷移図
+[画面遷移図（Figma）](https://www.figma.com/design/oS8wTW6u0WIxZXqUt9bmDp/smoker-bank?node-id=0-1&t=X7aWSsd2NaSFdeJh-1)
