@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  custom_cigarette: one
+  packs: 1
+  bought_date: 2025-09-25
+
+two:
+  user: two
+  custom_cigarette: two
+  packs: 1
+  bought_date: 2025-09-25
