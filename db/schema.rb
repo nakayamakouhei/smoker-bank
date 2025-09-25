@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_09_25_050712) do
+ActiveRecord::Schema[7.2].define(version: 2025_09_25_052131) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -21,6 +21,17 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_25_050712) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "smokes", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "cigarette_id", null: false
+    t.integer "packs", null: false
+    t.date "bought_date", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["cigarette_id"], name: "index_smokes_on_cigarette_id"
+    t.index ["user_id"], name: "index_smokes_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.string "email", null: false
@@ -28,4 +39,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_09_25_050712) do
     t.datetime "updated_at", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
   end
+
+  add_foreign_key "smokes", "cigarettes"
+  add_foreign_key "smokes", "users"
 end
