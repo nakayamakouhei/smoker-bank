@@ -1,44 +1,42 @@
 <!-- app/views/top/index.html.erb -->
 <div class="flex flex-col justify-center items-center min-h-screen bg-gray-100 px-4">
-
   <!-- 枠 -->
   <div class="bg-white border border-gray-300 rounded-xl shadow-lg p-6 w-full max-w-md text-center">
     
     <!-- タイトル -->
-<h2 class="text-5xl sm:text-6xl font-black text-green-700 tracking-wide font-sans mb-6 whitespace-nowrap">
-  smoker bank
-</h2>
-<% if user_signed_in? %>
-  <p><%= current_user.email %> さんでログイン中</p>
-<% else %>
-  <p>ログインしていません</p>
-<% end %>
+    <h2 class="text-5xl sm:text-6xl font-black text-green-700 tracking-wide font-sans mb-6 whitespace-nowrap">
+      smoker bank
+    </h2>
 
+    <% if user_signed_in? %>
+      <p><%= current_user.email %> さんでログイン中</p>
+    <% else %>
+      <p>ログインしていません</p>
+    <% end %>
 
     <!-- 説明文（ふわふわフォント適用） -->
-<div style="font-family: 'M PLUS Rounded 1c', sans-serif;" 
-     class="text-base sm:text-lg md:text-xl font-bold mb-6 space-y-4">
-  <p>たばこを吸っていなかったら</p>
-  <p>いくらになっていたんだろう</p>
-  <p>そう考えたことはありませんか？</p>
-  <p>このアプリはあなたが使ったお金と</p>
-  <p>「もし買えたもの」がわかります。</p>
-  <p>ちょっと夢のある、喫煙記録アプリ</p>
-</div>
-
+    <div style="font-family: 'M PLUS Rounded 1c', sans-serif;" 
+         class="text-base sm:text-lg md:text-xl font-bold mb-6 space-y-4">
+      <p>たばこを吸っていなかったら</p>
+      <p>いくらになっていたんだろう</p>
+      <p>そう考えたことはありませんか？</p>
+      <p>このアプリはあなたが使ったお金と</p>
+      <p>「もし買えたもの」がわかります。</p>
+      <p>ちょっと夢のある、喫煙記録アプリ</p>
+    </div>
 
     <!-- ボタン -->
-<div class="flex flex-col sm:flex-row gap-4 justify-center">
-  <% if user_signed_in? %>
-    <%= link_to "ログアウト", destroy_user_session_path, 
-          data: { turbo_method: :delete }, 
-          class: "px-6 py-3 bg-red-400 rounded text-white font-semibold" %>
-  <% else %>
-    <%= link_to "ログイン", new_user_session_path, class: "px-6 py-3 bg-green-400 rounded text-white font-semibold" %>
-    <%= link_to "新規登録", new_user_registration_path, class: "px-6 py-3 bg-green-400 rounded text-white font-semibold" %>
-  <% end %>
-</div>
-
+    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+      <% if user_signed_in? %>
+        <%= link_to "ログアウト", destroy_user_session_path, 
+              data: { turbo_method: :delete }, 
+              class: "px-6 py-3 bg-red-400 rounded text-white font-semibold" %>
+      <% else %>
+        <%= link_to "ログイン", new_user_session_path,
+              class: "px-6 py-3 bg-green-400 rounded text-white font-semibold" %>
+        <%= link_to "新規登録", new_user_registration_path,
+              class: "px-6 py-3 bg-green-400 rounded text-white font-semibold" %>
+      <% end %>
+    </div>
   </div>
-
 </div>
