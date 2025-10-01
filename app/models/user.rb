@@ -5,6 +5,7 @@ class User < ApplicationRecord
   # 既存の銘柄とログ
   has_many :smokes, dependent: :destroy
   has_many :cigarettes, through: :smokes
+  belongs_to :current_cigarette, class_name: "Cigarette", optional: true
 
   # カスタム銘柄とログ
   has_many :custom_cigarettes, dependent: :destroy
