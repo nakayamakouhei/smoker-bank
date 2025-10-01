@@ -29,12 +29,21 @@
   <!-- 現在の銘柄 -->
   <div class="border rounded-xl p-4 shadow space-y-3">
     <p class="font-bold mb-2">現在の銘柄</p>
-    <%= form_with model: Smoke.new, url: smokes_path, method: :post do |f| %>
+    <p class="text-lg font-bold">
+      <!-- 現在の銘柄表示（nilの場合は未選択と表示 -->
+      <%= current_user.current_cigarette&.name || "未選択" %>
+    </p>
+    
+    <!-- 送信フォームを作る -->
+    <!-- updateアクションにしたいからmethod: :patchにしている -->
+    <%= form_with url: current_cigarette_path, method: :patch, local: true do |f| %>
       <div class="flex space-x-2">
-        <%= f.collection_select :cigarette_id, @cigarettes, :id, :name,
-              { prompt: "銘柄を選択" },
-              { class: "border rounded p-2" } %>
-        <%= f.submit "変更", class: "bg-blue-500 text-white font-bold px-4 py-2 rounded" %>
+        <%= select_tag :current_cigarette_id,
+              options_from_collection_for_select(
+                @cigarettes, :id, :name, current_user.current_cigarette_id
+              ),
+              class: "border rounded p-2" %>
+        <%= f.submit "変更", class: "bg-blue-500 text-white font-bold px-4 py-2 rounded cursor-pointer" %>
       </div>
     <% end %>
   </div>
@@ -45,7 +54,7 @@
     <%= form_with model: Smoke.new, url: smokes_path, method: :post do |f| %>
       <div class="flex space-x-2">
         <%= f.select :packs, (1..12).to_a, {}, class: "border rounded p-2" %>
-        <%= f.submit "登録", class: "bg-green-500 text-white font-bold px-4 py-2 rounded" %>
+        <%= f.submit "登録", class: "bg-green-500 text-white font-bold px-4 py-2 rounded cursor-pointer" %>
       </div>
     <% end %>
   </div>
