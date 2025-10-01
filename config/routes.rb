@@ -11,9 +11,9 @@ Rails.application.routes.draw do
     root "home#index", as: :authenticated_root
   end
 
-  resources :items, only: [:index]
-  resources :smokes, only: [:create]
+  resources :items, only: [ :index ]
+  resources :smokes, only: [ :create ]
 
   # 現在の銘柄記憶用コントローラールート
-  resource :current_cigarette, only: [:update]
+  resource :current_cigarette, only: [ :update ]
 end

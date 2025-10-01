@@ -8,5 +8,5 @@ class HomeController < ApplicationController
     @total_packs = current_user.total_packs
     # たばこの銘柄一覧取得
     @cigarettes = Cigarette.all
-  end  
+  end
 end
