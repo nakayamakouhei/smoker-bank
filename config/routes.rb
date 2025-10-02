@@ -13,6 +13,12 @@ Rails.application.routes.draw do
 
   resources :items, only: [ :index ]
   resources :smokes, only: [ :create ]
+  resources :cigarettes, only: [] do
+    collection do
+      get :select
+      patch :update_selection
+    end
+  end
 
   # 現在の銘柄記憶用コントローラールート
   resource :current_cigarette, only: [ :update ]

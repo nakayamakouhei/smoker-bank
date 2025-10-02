@@ -1,0 +1,15 @@
+<!-- app/views/cigarettes/select.html.erb -->
+<div class="container mx-auto max-w-md py-8 space-y-6">
+  <h2 class="text-2xl font-bold mb-4">銘柄を選択する</h2>
+
+  <%= form_with url: update_selection_cigarettes_path, method: :patch, local: true do |f| %>
+    <%= select_tag :current_cigarette_id,
+          options_from_collection_for_select(@cigarettes, :id, :name, current_user.current_cigarette_id),
+          class: "border rounded p-2 w-full" %>
+    <%= f.submit "変更する", class: "bg-blue-500 text-white font-bold px-4 py-2 rounded mt-4" %>
+  <% end %>
+  <div class="mt-6 text-center">
+  <%= link_to "戻る", authenticated_root_path,
+        class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200" %>
+  </div>
+</div>
