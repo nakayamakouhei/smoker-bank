@@ -1,19 +1,24 @@
 services:
   db:
-    image: postgres
-    restart: always
+    image: postgres:16
+    restart: unless-stopped
     environment:
-      TZ: Asia/Tokyo
+      POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
+      TZ: Asia/Tokyo
     volumes:
-      - postgresql_data:/var/lib/postgresql
+      # 既存のボリューム名に合わせて再利用（←ここがポイント）
+      - smoker_bank_postgresql_data:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      # 5432 が他で使われていたら "5433:5432" に変更してね
+      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -d myapp_development -U postgres"]
+      # サーバ稼働確認だけに留める（DB名はpostgresでOK）
+      test: ["CMD-SHELL", "pg_isready -U postgres -d postgres"]
       interval: 10s
       timeout: 5s
       retries: 5
+
   web:
     build:
       context: .
@@ -32,8 +37,8 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
 volumes:
+  smoker_bank_postgresql_data:
   bundle_data:
-  postgresql_data:
   node_modules:
-  
