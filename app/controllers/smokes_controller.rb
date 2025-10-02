@@ -1,8 +1,15 @@
 class SmokesController < ApplicationController
   def create
+    # 箱数登録を押した時の挙動
+    current_user.smokes.create!(
+      packs: smoke_params[:packs],
+      cigarette_id: current_user.current_cigarette_id,
+      bought_date: Date.today
+    )
+
     # 新しいsmokeレコードを登録
     # smoke_paramsのハッシュとbought_dateのハッシュを合体させて作る
-    current_user.smokes.create!(smoke_params.merge(bought_date: Date.today))
+    # current_user.smokes.create!(smoke_params.merge(bought_date: Date.today))
 
     # 合計を再計算（Userモデルのメソッドを流用）
     @total_amount = current_user.total_amount
