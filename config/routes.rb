@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+  get "custom_cigarettes/index"
+  get "custom_cigarettes/new"
+  get "custom_cigarettes/create"
   devise_for :users
 
   # 未ログインユーザー（ヘルパーメソッド使用）
@@ -19,6 +22,7 @@ Rails.application.routes.draw do
       patch :update_selection
     end
   end
+  resources :custom_cigarettes, only: [ :new, :create, :index ]
 
   # 現在の銘柄記憶用コントローラールート
   resource :current_cigarette, only: [ :update ]

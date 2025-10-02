@@ -1,0 +1,19 @@
+<h1 class="text-xl font-bold mb-4">オリジナル銘柄一覧</h1>
+
+<%= link_to "新しい銘柄を作成", new_custom_cigarette_path,
+  class: "bg-green-500 text-white px-3 py-2 rounded hover:bg-green-600" %>
+<%= link_to "戻る", select_cigarettes_path,
+    class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200 cursor-pointer" %>
+
+<ul class="mt-4 space-y-2">
+  <% @custom_cigarettes.each do |c| %>
+    <li class="border-b py-2">
+      <span class="font-semibold"><%= c.name %></span>
+      （<%= number_to_currency(c.price, unit: "¥") %>）
+    </li>
+  <% end %>
+</ul>
+
+<% if @custom_cigarettes.empty? %>
+  <p class="text-gray-500 mt-4">まだオリジナル銘柄は登録されていません。</p>
+<% end %>
