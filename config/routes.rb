@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "custom_cigarette_logs/create"
   devise_for :users
 
   # 未ログインユーザー
@@ -32,4 +31,6 @@ Rails.application.routes.draw do
   resource :current_cigarette, only: [ :update ]
 
   resources :custom_cigarette_logs, only: [ :create ]
+
+  resources :histories, only: [:index]
 end

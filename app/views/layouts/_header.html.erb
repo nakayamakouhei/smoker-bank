@@ -8,7 +8,7 @@
       <% if user_signed_in? %>
         <!-- ログイン後の表示 -->
         <%= link_to "ホーム", authenticated_root_path, class: "hover:underline" %>
-        <%= link_to "履歴", "#", class: "hover:underline" %>
+        <%= link_to "履歴", histories_path, class: "hover:underline" %>
         <%= link_to "ログアウト", destroy_user_session_path,
               data: { turbo_method: :delete },
               class: "hover:underline text-red-400" %>

@@ -1,0 +1,17 @@
+<h1>履歴一覧</h1>
+
+<ul>
+  <% @histories.each do |log| %>
+    <li>
+      <% if log.is_a?(Smoke) %>
+        <%= log.bought_date %> |
+        <%= log.cigarette.name %>（<%= log.packs %>箱） |
+        <%= number_to_currency(log.cigarette.price * log.packs, unit: "", precision: 0) %>円
+      <% else %>
+        <%= log.bought_date %> |
+        <%= log.custom_cigarette.name %>（<%= log.packs %>箱） |
+        <%= number_to_currency(log.custom_cigarette.price * log.packs, unit: "", precision: 0) %>円
+      <% end %>
+    </li>
+  <% end %>
+</ul>
