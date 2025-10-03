@@ -1,0 +1,21 @@
+<h1 class="text-xl font-bold mb-4">オリジナル銘柄を作成</h1>
+
+<%= form_with model: @custom_cigarette, local: true do |f| %>
+  <div class="mb-4">
+    <%= f.label :name, "銘柄名", class: "block font-bold" %>
+    <%= f.text_field :name, class: "border rounded w-full px-2 py-1" %>
+  </div>
+
+  <div class="mb-4">
+    <%= f.label :price, "価格（円）", class: "block font-bold" %>
+    <%= f.number_field :price, class: "border rounded w-full px-2 py-1" %>
+  </div>
+
+  <div class="flex space-x-4">
+    <%= f.submit "登録する",
+          class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer" %>
+
+    <%= link_to "戻る", custom_cigarettes_path,
+          class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200 cursor-pointer" %>
+  </div>
+<% end %>
