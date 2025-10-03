@@ -32,7 +32,9 @@
               class: "text-blue-500 underline text-sm" %>
       </div>
       <p class="text-2xl font-bold text-gray-800">
-        <%= current_user.current_cigarette&.name || "未選択" %>
+        <%= current_user.current_cigarette&.name ||
+            current_user.current_custom_cigarette&.name ||
+            "未選択" %>
       </p>
     </div>
   </div>
@@ -40,11 +42,23 @@
   <!-- 箱数をカウントする -->
   <div class="border rounded-xl p-4 shadow space-y-3 text-center">
     <p class="font-bold">箱数をカウントする</p>
-    <%= form_with model: Smoke.new, url: smokes_path, method: :post do |f| %>
-      <div class="flex justify-center space-x-2">
-        <%= f.select :packs, (1..12).to_a, {}, class: "border rounded p-2" %>
-        <%= f.submit "登録", class: "bg-green-500 text-white font-bold px-4 py-2 rounded cursor-pointer" %>
-      </div>
+
+    <% if current_user.current_cigarette.present? %>
+      <%= form_with model: Smoke.new, url: smokes_path, method: :post do |f| %>
+        <div class="flex justify-center space-x-2">
+          <%= f.select :packs, (1..12).to_a, {}, class: "border rounded p-2" %>
+          <%= f.submit "登録", class: "bg-green-500 text-white font-bold px-4 py-2 rounded cursor-pointer" %>
+        </div>
+      <% end %>
+    <% elsif current_user.current_custom_cigarette.present? %>
+      <%= form_with model: CustomCigaretteLog.new, url: custom_cigarette_logs_path, method: :post do |f| %>
+        <div class="flex justify-center space-x-2">
+          <%= f.select :packs, (1..12).to_a, {}, class: "border rounded p-2" %>
+          <%= f.submit "登録", class: "bg-green-500 text-white font-bold px-4 py-2 rounded cursor-pointer" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="text-gray-500">現在の銘柄が未選択です</p>
     <% end %>
   </div>
 

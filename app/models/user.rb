@@ -6,6 +6,7 @@ class User < ApplicationRecord
   has_many :smokes, dependent: :destroy
   has_many :cigarettes, through: :smokes
   belongs_to :current_cigarette, class_name: "Cigarette", optional: true
+  belongs_to :current_custom_cigarette, class_name: "CustomCigarette", optional: true
 
   # カスタム銘柄とログ
   has_many :custom_cigarettes, dependent: :destroy
