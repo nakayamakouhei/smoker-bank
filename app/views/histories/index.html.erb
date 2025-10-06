@@ -3,6 +3,8 @@
   合計金額: <%= number_to_currency(@total_amount, unit: "", precision: 0) %>円　
   合計箱数: <%= @total_packs %>箱
 </div>
+<%= link_to "戻る", authenticated_root_path,
+          class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200 cursor-pointer" %>
 
 <div class="mb-4">
   <%= form_with url: histories_path, method: :get, data: { turbo_frame: "histories_list" } do %>
