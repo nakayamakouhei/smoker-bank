@@ -26,6 +26,12 @@ class SmokesController < ApplicationController
     end
   end
 
+  def destroy
+    @smoke = current_user.smokes.find(params[:id])
+    @smoke.destroy
+    redirect_to histories_path, notice: "履歴を削除しました"
+  end
+
   private
 
   def smoke_params

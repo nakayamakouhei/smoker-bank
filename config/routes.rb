@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get "custom_cigarette_logs/create"
   devise_for :users
 
   # 未ログインユーザー
@@ -13,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   resources :items, only: [ :index ]
-  resources :smokes, only: [ :create ]
+  resources :smokes, only: [ :create, :destroy ]
 
   resources :cigarettes, only: [] do
     collection do
@@ -31,5 +30,7 @@ Rails.application.routes.draw do
   # 現在の銘柄記憶用コントローラー
   resource :current_cigarette, only: [ :update ]
 
-  resources :custom_cigarette_logs, only: [ :create ]
+  resources :custom_cigarette_logs, only: [ :create, :destroy ]
+
+  resources :histories, only: [:index]
 end
