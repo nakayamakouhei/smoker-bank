@@ -1,15 +1,57 @@
-<ul>
-  <% histories.each do |log| %>
-    <li>
-      <% if log.is_a?(Smoke) %>
-        <%= log.bought_date %> |
-        <%= log.cigarette.name %>（<%= log.packs %>箱） |
-        <%= number_to_currency(log.cigarette.price * log.packs, unit: "", precision: 0) %>円
-      <% else %>
-        <%= log.bought_date %> |
-        <%= log.custom_cigarette.name %>（<%= log.packs %>箱） |
-        <%= number_to_currency(log.custom_cigarette.price * log.packs, unit: "", precision: 0) %>円
-      <% end %>
-    </li>
-  <% end %>
-</ul>
+<!-- app/views/histories/_list.html.erb -->
+<% if histories.any? %>
+  <ul class="divide-y divide-gray-200 bg-white border border-gray-200 rounded-lg shadow-sm">
+    <% histories.each do |log| %>
+      <li class="flex justify-between items-center px-4 py-3 hover:bg-gray-50 transition">
+        <!-- 左側：日付・銘柄名・箱数 -->
+        <div class="flex flex-col text-gray-700">
+          <span class="text-sm text-gray-500">
+            <%= l log.bought_date, format: :short %>
+          </span>
+
+          <% if log.is_a?(Smoke) %>
+            <span class="text-base font-semibold text-gray-800">
+              🚬 <%= log.cigarette.name %>
+            </span>
+          <% else %>
+            <span class="text-base font-semibold text-gray-800">
+              🌿 <%= log.custom_cigarette.name %>（オリジナル）
+            </span>
+          <% end %>
+
+          <span class="text-sm text-gray-600">
+            <%= log.packs %>箱
+          </span>
+        </div>
+
+        <!-- 右側：金額 + 削除ボタン -->
+        <div class="flex flex-col items-end space-y-1 text-right">
+          <% price = log.is_a?(Smoke) ? log.cigarette.price * log.packs : log.custom_cigarette.price * log.packs %>
+          <span class="text-lg font-bold text-green-700">
+            <%= number_to_currency(price, unit: "", precision: 0) %>円
+          </span>
+
+          <% if log.is_a?(Smoke) %>
+            <%= button_to "削除", smoke_path(log),
+                  method: :delete,
+                  data: { turbo: false, confirm: "この履歴を削除しますか？" },
+                  class: "text-xs text-red-600 hover:text-red-800 underline cursor-pointer" %>
+          <% else %>
+            <%= button_to "削除", custom_cigarette_log_path(log),
+                  method: :delete,
+                  data: { turbo: false, confirm: "この履歴を削除しますか？" },
+                  class: "text-xs text-red-600 hover:text-red-800 underline cursor-pointer" %>
+          <% end %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+
+  <!-- ページネーション -->
+  <div class="mt-6 flex justify-center">
+    <%# ページネーションは後で有効化予定 %>
+    <%#= paginate histories, theme: 'tailwind' %>
+  </div>
+<% else %>
+  <p class="text-center text-gray-500 mt-8">履歴がまだありません。</p>
+<% end %>

@@ -9,4 +9,10 @@ class CustomCigaretteLogsController < ApplicationController
     )
     redirect_to authenticated_root_path, notice: "オリジナル銘柄を登録しました"
   end
+
+  def destroy
+    @log = current_user.custom_cigarette_logs.find(params[:id])
+    @log.destroy
+    redirect_to histories_path, notice: "履歴を削除しました"
+  end
 end
