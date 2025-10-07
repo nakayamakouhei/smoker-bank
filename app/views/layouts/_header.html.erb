@@ -1,22 +1,42 @@
+<!-- app/views/shared/_header.html.erb -->
 <header class="bg-gray-800 text-white p-4">
   <div class="container mx-auto flex justify-between items-center">
-    <h1 class="text-xl font-bold">
-      <%= link_to "Smoker Bank", authenticated_root_path, class: "hover:underline" %>
-    </h1>
+    <% if user_signed_in? %>
+      <h1 class="text-xl font-bold">
+        <% if selected_any_cigarette? %>
+          <!-- 通常時はホームリンクとして表示 -->
+          <%= link_to "Smoker Bank", authenticated_root_path, class: "hover:underline" %>
+        <% else %>
+          <!-- 銘柄未選択中はリンクを無効化 -->
+          <span class="text-gray-400 cursor-not-allowed">Smoker Bank</span>
+        <% end %>
+      </h1>
 
-    <nav class="space-x-4">
-      <% if user_signed_in? %>
-        <!-- ログイン後の表示 -->
-        <%= link_to "ホーム", authenticated_root_path, class: "hover:underline" %>
-        <%= link_to "履歴", histories_path, class: "hover:underline" %>
+      <nav class="space-x-4 flex items-center">
+        <% if selected_any_cigarette? %>
+          <!-- 銘柄選択済み：通常表示 -->
+          <%= link_to "ホーム", authenticated_root_path, class: "hover:underline" %>
+          <%= link_to "履歴", histories_path, class: "hover:underline" %>
+        <% else %>
+          <!-- 初回ログイン中（銘柄未選択） -->
+          <span class="text-sm text-gray-400">初回設定中：銘柄を選択してください</span>
+        <% end %>
+
+        <!-- ログアウトは常に表示 -->
         <%= link_to "ログアウト", destroy_user_session_path,
               data: { turbo_method: :delete },
-              class: "hover:underline text-red-400" %>
-      <% else %>
-        <!-- ログイン前の表示 -->
+              class: "hover:underline text-red-400 ml-4" %>
+      </nav>
+
+    <% else %>
+      <!-- 未ログイン時 -->
+      <h1 class="text-xl font-bold">
+        <%= link_to "Smoker Bank", root_path, class: "hover:underline" %>
+      </h1>
+      <nav class="space-x-4">
         <%= link_to "ログイン", new_user_session_path, class: "hover:underline" %>
         <%= link_to "新規登録", new_user_registration_path, class: "hover:underline" %>
-      <% end %>
-    </nav>
+      </nav>
+    <% end %>
   </div>
 </header>

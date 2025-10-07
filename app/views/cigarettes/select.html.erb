@@ -13,7 +13,9 @@
     <%= link_to "オリジナル銘柄一覧ページ", custom_cigarettes_path,
           class: "px-4 py-2 bg-green-500 text-white rounded shadow hover:bg-green-600 cursor-pointer" %>
 
-    <%= link_to "戻る", authenticated_root_path,
-          class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200 cursor-pointer" %>
+    <% if selected_any_cigarette? %>
+      <%= link_to "戻る", authenticated_root_path,
+            class: "px-4 py-2 bg-gray-300 text-gray-800 rounded shadow hover:bg-gray-200 cursor-pointer" %>
+    <% end %>
   </div>
 </div>
