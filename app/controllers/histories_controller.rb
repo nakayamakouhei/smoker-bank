@@ -7,13 +7,13 @@ class HistoriesController < ApplicationController
     # 並び替え
     @histories =
       case params[:sort]
-      when 'date_asc'
+      when "date_asc"
         @histories.sort_by(&:bought_date)
-      when 'name_asc'
+      when "name_asc"
         @histories.sort_by { |log| log.is_a?(Smoke) ? log.cigarette.name : log.custom_cigarette.name }
-      when 'price_desc'
+      when "price_desc"
         @histories.sort_by { |log| log.is_a?(Smoke) ? log.cigarette.price : log.custom_cigarette.price }.reverse
-      when 'price_asc'
+      when "price_asc"
         @histories.sort_by { |log| log.is_a?(Smoke) ? log.cigarette.price : log.custom_cigarette.price }
       else
         @histories.sort_by(&:bought_date).reverse
