@@ -4,7 +4,9 @@ Rails.application.routes.draw do
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
   get "contact", to: "pages#contact", as: :contact
-  post "contact", to: "pages#send_contact"
+  post "send_contact", to: "pages#send_contact", as: :send_contact
+  get "contact_complete", to: "pages#contact_complete", as: :contact_complete
+
 
   # 未ログインユーザー
   unauthenticated do

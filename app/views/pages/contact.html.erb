@@ -1,36 +1,28 @@
-<div class="container mx-auto max-w-md py-8">
-  <h2 class="text-2xl font-bold mb-6 text-center">お問い合わせ</h2>
+<div class="container mx-auto max-w-md py-8 space-y-6">
+  <h1 class="text-2xl font-bold mb-4">お問い合わせ</h1>
+
+  <%= form_with url: send_contact_path, method: :post, local: true do |f| %>
+    <div class="mb-4">
+      <%= f.label :name, "お名前", class: "block font-bold" %>
+      <%= f.text_field :name, class: "border rounded w-full px-2 py-1" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :email, "メールアドレス", class: "block font-bold" %>
+      <%= f.email_field :email, class: "border rounded w-full px-2 py-1" %>
+    </div>
+
+    <div class="mb-4">
+      <%= f.label :message, "お問い合わせ内容", class: "block font-bold" %>
+      <%= f.text_area :message, class: "border rounded w-full px-2 py-1 h-32" %>
+    </div>
+
+    <%= f.submit "送信する", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer" %>
+  <% end %>
 
   <% if flash[:notice] %>
-    <div class="bg-green-100 text-green-700 border border-green-300 p-4 rounded mb-6 text-center">
+    <div class="mt-4 bg-green-100 text-green-800 px-4 py-2 rounded">
       <%= flash[:notice] %>
     </div>
-
-    <div class="text-center">
-      <button onclick="window.close()" class="bg-gray-700 text-white px-4 py-2 rounded hover:bg-gray-600">
-        タブを閉じる
-      </button>
-    </div>
-  <% else %>
-    <%= form_with url: contact_path, method: :post, local: true, class: "space-y-4" do |f| %>
-      <div>
-        <%= f.label :name, "お名前", class: "block font-bold mb-1" %>
-        <%= f.text_field :name, class: "w-full border rounded px-3 py-2" %>
-      </div>
-
-      <div>
-        <%= f.label :email, "メールアドレス", class: "block font-bold mb-1" %>
-        <%= f.email_field :email, class: "w-full border rounded px-3 py-2" %>
-      </div>
-
-      <div>
-        <%= f.label :message, "お問い合わせ内容", class: "block font-bold mb-1" %>
-        <%= f.text_area :message, rows: 5, class: "w-full border rounded px-3 py-2" %>
-      </div>
-
-      <div class="text-center">
-        <%= f.submit "送信する", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer" %>
-      </div>
-    <% end %>
   <% end %>
 </div>
