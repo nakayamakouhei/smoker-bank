@@ -1,6 +1,11 @@
 Rails.application.routes.draw do
   devise_for :users
 
+  get "terms", to: "pages#terms", as: :terms
+  get "privacy", to: "pages#privacy", as: :privacy
+  get "contact", to: "pages#contact", as: :contact
+  post "contact", to: "pages#send_contact"
+
   # 未ログインユーザー
   unauthenticated do
     root "top#index"
