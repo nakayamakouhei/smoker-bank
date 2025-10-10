@@ -1,0 +1,54 @@
+<div class="flex flex-col items-center pt-16 min-h-screen bg-gray-50">
+
+
+  <!-- 金額表示 -->
+  <div class="bg-white shadow-md rounded-xl px-8 py-6 text-center mb-6 w-80 border">
+    <p class="text-gray-700 text-sm mb-2">あなたがタバコに使った金額は…</p>
+    <p class="text-4xl font-bold text-green-600 mb-1">
+      ¥<%= number_with_delimiter(@total_amount) %>
+    </p>
+    <p class="text-xs text-gray-400">もし吸っていなかったら、これが買えたかも！</p>
+  </div>
+
+  <!-- powered by Rakuten -->
+  <div class="flex items-center space-x-1 mb-4">
+    <p class="text-xs text-gray-500">powered by</p>
+    <%= image_tag "rakuten_logo.png", alt: "Rakuten", class: "h-4" %>
+  </div>
+
+  <!-- カテゴリリスト -->
+  <div class="bg-white shadow-md rounded-lg divide-y w-80 mb-12">
+    <% [
+      "禁煙グッズ",
+      "メンズ ファッション",
+      "レディース ファッション",
+      "バッグ・小物・ブランド雑貨",
+      "ジュエリー・アクセサリー",
+      "腕時計",
+      "美容・コスメ・香水",
+      "医薬品・コンタクト・介護",
+      "家電",
+      "パソコン・周辺機器",
+      "スマートフォン・タブレット",
+      "インテリア・寝具・収納",
+      "日用品雑貨・文房具・手芸",
+      "スポーツ・アウトドア",
+      "自転車・車・バイク",
+      "おもちゃ・ホビー・ゲーム",
+      "ベビー・キッズ・マタニティ",
+      "食品",
+      "スイーツ・お菓子",
+      "ドリンク・お酒",
+      "ペット・ペットグッズ",
+      "花・ガーデン・DIY",
+      "サービス・リフォーム"
+    ].each do |category| %>
+      <% rakuten_url = "https://search.rakuten.co.jp/search/mall/#{CGI.escape(category)}/?max=#{@total_amount}&s=3" %>
+      <%= link_to category, rakuten_url,
+          target: "_blank",
+          rel: "noopener",
+          class: "block px-4 py-3 text-left hover:bg-gray-100 text-gray-800" %>
+    <% end %>
+  </div>
+
+</div>
