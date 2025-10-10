@@ -40,4 +40,6 @@ Rails.application.routes.draw do
   resources :custom_cigarette_logs, only: [ :create, :destroy ]
 
   resources :histories, only: [ :index ]
+
+  resources :items, only: [ :index ]
 end
