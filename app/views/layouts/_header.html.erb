@@ -1,31 +1,42 @@
-<!-- app/views/shared/_header.html.erb -->
-<header class="bg-gray-800 text-white p-4">
-  <div class="container mx-auto flex justify-between items-center">
+<header class="bg-gray-800 text-white p-4" data-controller="menu">
+  <div class="flex justify-between items-center px-4 relative w-full">
     <% if user_signed_in? %>
       <h1 class="text-xl font-bold">
         <% if selected_any_cigarette? %>
-          <!-- 通常時はホームリンクとして表示 -->
           <%= link_to "Smoker Bank", authenticated_root_path, class: "hover:underline" %>
         <% else %>
-          <!-- 銘柄未選択中はリンクを無効化 -->
           <span class="text-gray-400 cursor-not-allowed">Smoker Bank</span>
         <% end %>
       </h1>
 
-      <nav class="space-x-4 flex items-center">
+      <!-- 🍔 ハンバーガーボタン -->
+      <button data-action="click->menu#toggle"
+              class="focus:outline-none ml-4 cursor-pointer hover:text-gray-300 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16m0 6H4" />
+        </svg>
+      </button>
+
+      <!-- 📜 ログイン後メニュー -->
+      <nav data-menu-target="menu"
+           class="hidden flex-col absolute right-0 top-14 bg-gray-800 w-56 rounded shadow-md z-50 divide-y divide-gray-700 py-1">
         <% if selected_any_cigarette? %>
-          <!-- 銘柄選択済み：通常表示 -->
-          <%= link_to "ホーム", authenticated_root_path, class: "hover:underline" %>
-          <%= link_to "履歴", histories_path, class: "hover:underline" %>
+          <%= link_to "ホーム", authenticated_root_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
+          <%= link_to "履歴", histories_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
         <% else %>
-          <!-- 初回ログイン中（銘柄未選択） -->
-          <span class="text-sm text-gray-400">初回設定中：銘柄を選択してください</span>
+          <span class="block px-4 py-2.5 text-sm text-gray-400">初回設定中：銘柄を選択してください</span>
         <% end %>
 
-        <!-- ログアウトは常に表示 -->
+        <!-- 🔗 フッターリンク -->
+        <%= link_to "利用規約", terms_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
+        <%= link_to "プライバシーポリシー", privacy_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
+        <%= link_to "お問い合わせ", contact_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
+
         <%= link_to "ログアウト", destroy_user_session_path,
               data: { turbo_method: :delete },
-              class: "hover:underline text-red-400 ml-4" %>
+              class: "block px-4 py-2.5 hover:bg-gray-700 text-red-400" %>
       </nav>
 
     <% else %>
@@ -33,9 +44,26 @@
       <h1 class="text-xl font-bold">
         <%= link_to "Smoker Bank", root_path, class: "hover:underline" %>
       </h1>
-      <nav class="space-x-4">
-        <%= link_to "ログイン", new_user_session_path, class: "hover:underline" %>
-        <%= link_to "新規登録", new_user_registration_path, class: "hover:underline" %>
+
+      <button data-action="click->menu#toggle"
+              class="focus:outline-none ml-4 cursor-pointer hover:text-gray-300 transition-colors">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2"
+             viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round"
+                d="M4 6h16M4 12h16m0 6H4" />
+        </svg>
+      </button>
+
+      <!-- 📜 未ログインメニュー -->
+      <nav data-menu-target="menu"
+           class="hidden flex-col absolute right-0 top-14 bg-gray-800 w-56 rounded shadow-md z-50 divide-y divide-gray-700 py-1">
+        <%= link_to "ログイン", new_user_session_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
+        <%= link_to "新規登録", new_user_registration_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
+
+        <!-- 🔗 フッターリンク -->
+        <%= link_to "利用規約", terms_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
+        <%= link_to "プライバシーポリシー", privacy_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
+        <%= link_to "お問い合わせ", contact_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
       </nav>
     <% end %>
   </div>
