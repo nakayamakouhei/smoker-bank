@@ -1,25 +1,66 @@
-<h2>Change your password</h2>
+<div class="flex flex-col justify-center items-center min-h-screen bg-gray-100 px-4">
+  <!-- 枠 -->
+  <div class="bg-white border border-gray-300 rounded-xl shadow-lg p-6 w-full max-w-md text-center">
 
-<%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :put }) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
-  <%= f.hidden_field :reset_password_token %>
+    <!-- タイトル -->
+    <h2 class="text-3xl sm:text-4xl font-bold text-green-700 mb-6">
+      新しいパスワード設定
+    </h2>
 
-  <div class="field">
-    <%= f.label :password, "New password" %><br />
-    <% if @minimum_password_length %>
-      <em>(<%= @minimum_password_length %> characters minimum)</em><br />
+    <!-- 説明文 -->
+    <p class="text-gray-600 mb-6 text-sm sm:text-base">
+      新しいパスワードを入力して保存してください。
+    </p>
+
+    <!-- フォーム -->
+    <%= form_with model: resource, url: password_path(resource_name), local: true, html: { method: :put }, class: "space-y-6" do |f| %>
+      <%= f.hidden_field :reset_password_token %>
+
+      <!-- 新しいパスワード -->
+      <div class="text-left">
+        <%= f.label :password, "新しいパスワード", class: "block text-sm font-medium text-gray-700" %>
+        <% if @minimum_password_length %>
+          <p class="text-xs text-gray-500 mt-1 mb-1">（<%= @minimum_password_length %>文字以上）</p>
+        <% end %>
+        <div class="relative">
+          <%= f.password_field :password,
+                autofocus: true,
+                autocomplete: "new-password",
+                id: "reset_password_field",
+                class: "mt-1 block w-full p-2 border rounded pr-10" %>
+
+          <!-- 👁 アイコン（表示切替用） -->
+          <button type="button"
+                  class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 password-toggle-btn"
+                  data-target="reset_password_field">
+            <%= eye_toggle_icons %>
+          </button>
+        </div>
+      </div>
+
+      <!-- 新しいパスワード（確認用） -->
+      <div class="text-left">
+        <%= f.label :password_confirmation, "パスワード（確認用）", class: "block text-sm font-medium text-gray-700" %>
+        <div class="relative">
+          <%= f.password_field :password_confirmation,
+                autocomplete: "new-password",
+                id: "reset_password_confirmation_field",
+                class: "mt-1 block w-full p-2 border rounded pr-10" %>
+
+          <!-- 👁 アイコン（表示切替用） -->
+          <button type="button"
+                  class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500 password-toggle-btn"
+                  data-target="reset_password_confirmation_field">
+            <%= eye_toggle_icons %>
+          </button>
+        </div>
+      </div>
+
+      <!-- 送信ボタン -->
+      <div>
+        <%= f.submit "パスワードを変更する",
+              class: "w-full bg-green-500 text-white py-2 rounded hover:bg-green-400 transition cursor-pointer" %>
+      </div>
     <% end %>
-    <%= f.password_field :password, autofocus: true, autocomplete: "new-password" %>
   </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation, "Confirm new password" %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Change my password" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

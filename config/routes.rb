@@ -1,12 +1,20 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: {
+    passwords: "users/passwords"
+  }
+
+  devise_scope :user do
+    # パスワード再設定メール送信完了ページ
+    get "password_reset_sent", to: "users/passwords#sent", as: :password_reset_sent
+    # パスワード変更完了ページ
+    get "password_reset_done", to: "users/passwords#done", as: :password_reset_done
+  end
 
   get "terms", to: "pages#terms", as: :terms
   get "privacy", to: "pages#privacy", as: :privacy
   get "contact", to: "pages#contact", as: :contact
   post "send_contact", to: "pages#send_contact", as: :send_contact
   get "contact_complete", to: "pages#contact_complete", as: :contact_complete
-
 
   # 未ログインユーザー
   unauthenticated do
