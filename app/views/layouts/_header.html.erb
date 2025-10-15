@@ -24,12 +24,11 @@
            class="hidden flex-col absolute right-0 top-14 bg-gray-800 w-56 rounded shadow-md z-50 divide-y divide-gray-700 py-1">
         <% if selected_any_cigarette? %>
           <%= link_to "ホーム", authenticated_root_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
+          <%= link_to "プロフィール", edit_profile_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
           <%= link_to "履歴", histories_path, class: "block px-4 py-2.5 hover:bg-gray-700" %>
         <% else %>
           <span class="block px-4 py-2.5 text-sm text-gray-400">初回設定中：銘柄を選択してください</span>
         <% end %>
-
-        <!-- 🔗 フッターリンク -->
         <%= link_to "利用規約", terms_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
         <%= link_to "プライバシーポリシー", privacy_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
         <%= link_to "お問い合わせ", contact_path, target: "_blank", rel: "noopener", class: "block px-4 py-2.5 hover:bg-gray-700" %>
