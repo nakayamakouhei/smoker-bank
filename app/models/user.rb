@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :custom_cigarettes, dependent: :destroy
   has_many :custom_cigarette_logs, dependent: :destroy
 
+  validates :name, presence: true
+
   def total_amount
     # 既存銘柄の合計
     smokes_total = smokes.joins(:cigarette)

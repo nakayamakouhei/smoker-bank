@@ -46,8 +46,7 @@ Rails.application.routes.draw do
   resource :current_cigarette, only: [ :update ]
 
   resources :custom_cigarette_logs, only: [ :create, :destroy ]
-
   resources :histories, only: [ :index ]
-
   resources :items, only: [ :index ]
+  resource :profile, only: [:edit, :update]
 end
