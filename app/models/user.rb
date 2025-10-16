@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # 既存の銘柄とログ
   has_many :smokes, dependent: :destroy
@@ -34,7 +34,7 @@ class User < ApplicationRecord
   def self.from_omniauth(auth)
     # すでにGoogleでログイン済みのユーザーを探す
     user = find_by(email: auth.info.email)
-  
+
     if user
       # 既存ユーザーがいたら、そのユーザーにGoogle情報を紐づけ
       user.update(

@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: {
-    passwords: "users/passwords"
+    passwords: "users/passwords",
+    omniauth_callbacks: "users/omniauth_callbacks"
   }
 
   devise_scope :user do
@@ -48,5 +49,5 @@ Rails.application.routes.draw do
   resources :custom_cigarette_logs, only: [ :create, :destroy ]
   resources :histories, only: [ :index ]
   resources :items, only: [ :index ]
-  resource :profile, only: [:edit, :update]
+  resource :profile, only: [ :edit, :update ]
 end
