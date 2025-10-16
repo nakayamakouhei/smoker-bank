@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   # 既存の銘柄とログ
   has_many :smokes, dependent: :destroy
@@ -28,5 +29,29 @@ class User < ApplicationRecord
   def total_packs
     # 既存銘柄とカスタム銘柄の箱数合計
     smokes.sum(:packs) + custom_cigarette_logs.sum(:packs)
+  end
+
+  def self.from_omniauth(auth)
+    # すでにGoogleでログイン済みのユーザーを探す
+    user = find_by(email: auth.info.email)
+  
+    if user
+      # 既存ユーザーがいたら、そのユーザーにGoogle情報を紐づけ
+      user.update(
+        name: auth.info.name,
+        provider: auth.provider,
+        uid: auth.uid
+      )
+    else
+      # 新規ユーザーとして登録
+      user = create(
+        name: auth.info.name,
+        email: auth.info.email,
+        provider: auth.provider,
+        uid: auth.uid,
+        password: Devise.friendly_token[0, 20] # 仮パスワード
+      )
+    end
+    user
   end
 end
