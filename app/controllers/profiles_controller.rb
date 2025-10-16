@@ -7,7 +7,7 @@ class ProfilesController < ApplicationController
 
   def update
     @user = current_user
-  
+
     # パスワード変更あり
     if user_params[:password].present?
       if @user.valid_password?(params[:user][:current_password])
@@ -23,7 +23,7 @@ class ProfilesController < ApplicationController
         flash.now[:alert] = "現在のパスワードが正しくありません。"
         render :edit, status: :unprocessable_entity
       end
-  
+
     # パスワード以外の更新
     else
       if @user.update(user_params.except(:password, :password_confirmation))
@@ -34,7 +34,7 @@ class ProfilesController < ApplicationController
       end
     end
   end
-  
+
 
   private
 

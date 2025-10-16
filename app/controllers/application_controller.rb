@@ -2,6 +2,8 @@ class ApplicationController < ActionController::Base
   # モダンブラウザ対応のみ許可（Rails標準の安全設定）
   allow_browser versions: :modern
 
+  protect_from_forgery with: :exception
+
   # Deviseで追加パラメータを許可する
   before_action :configure_permitted_parameters, if: :devise_controller?
 
