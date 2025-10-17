@@ -52,6 +52,7 @@
     <% end %>
 
     <!-- Googleログインボタンはフォームの外に配置 -->
+    <!-- 外部サイトへリダイレクトするためturboはfalse -->
     <div class="mt-6">
       <%= button_to user_google_oauth2_omniauth_authorize_path,
             method: :post,
