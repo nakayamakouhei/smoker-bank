@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # 既存の銘柄とログ
   has_many :smokes, dependent: :destroy
@@ -44,8 +44,8 @@ class User < ApplicationRecord
         email: auth.info.email,
         provider: auth.provider,
         uid: auth.uid,
-        password: Devise.friendly_token[0, 20], # 仮パスワード
-        password_set: false                     # ←★ ここを追加
+        password: Devise.friendly_token[0, 20],
+        password_set: false
       )
     end
     user
@@ -53,17 +53,14 @@ class User < ApplicationRecord
 
   # パスワード更新ロジック
   def update_with_optional_password(params)
-    # current_password はDBにないので除外
     clean_params = params.except(:current_password)
-  
-    # Googleログインのみ、かつパス未設定
+
     if provider == "google_oauth2" && !password_set
       success = update(clean_params)
       update(password_set: true) if success && clean_params[:password].present?
       return success
     end
-  
-    # 通常ユーザー or Google（パス設定済）
+
     if clean_params[:password].present?
       if valid_password?(params[:current_password])
         success = update(clean_params)
@@ -75,6 +72,20 @@ class User < ApplicationRecord
       end
     else
       update(clean_params.except(:password, :password_confirmation))
+    end
+  end
+
+  # ✅ Devise通知をSendGrid APIで処理
+  def send_devise_notification(notification, *args)
+    if notification == :reset_password_instructions
+      token = args.first
+      url_options = Rails.application.config.action_mailer.default_url_options || {}
+      reset_link = Rails.application.routes.url_helpers.edit_user_password_url(
+        { reset_password_token: token }.merge(url_options)
+      )
+      SendgridMailer.password_reset(email, reset_link)
+    else
+      super
     end
   end
 end
