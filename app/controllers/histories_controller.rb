@@ -26,7 +26,10 @@ class HistoriesController < ApplicationController
       @histories.select! { |h| h.bought_date.between?(start_date, end_date) }
     end
 
-    # 合計
+    # ✅ ページネーションをここで適用
+    @histories = Kaminari.paginate_array(@histories).page(params[:page]).per(10)
+
+    # 合計（ページネーション前の全件を対象にする場合は @histories 元の配列を使う）
     @total_amount = @histories.sum do |log|
       log.is_a?(Smoke) ? log.cigarette.price * log.packs : log.custom_cigarette.price * log.packs
     end

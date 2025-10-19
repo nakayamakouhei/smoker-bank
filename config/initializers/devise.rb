@@ -23,6 +23,7 @@ Devise.setup do |config|
   config.case_insensitive_keys = [ :email ]
   config.strip_whitespace_keys = [ :email ]
   config.skip_session_storage = [ :http_auth ]
+  config.paranoid = true
 
   # ==> Configuration for :database_authenticatable
   config.stretches = Rails.env.test? ? 1 : 12
