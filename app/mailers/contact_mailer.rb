@@ -3,7 +3,7 @@
 # このMailerはSendGrid API移行により非使用（旧SMTP版）
 # 残しておく理由：将来ActionMailer経由の送信を再開したくなった時の参考用
 
-# class ContactMailer < ApplicationMailer
+class ContactMailer < ApplicationMailer
 #   default to: "paradinatu@gmail.com", from: "no-reply@smokerbank.com"
 #
 #   def send_contact(name, email, message)
@@ -20,4 +20,4 @@
 #       subject: "【Smoker Bank】お問い合わせありがとうございます"
 #     )
 #   end
-# end
+end
