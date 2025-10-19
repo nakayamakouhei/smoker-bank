@@ -8,46 +8,20 @@ class ProfilesController < ApplicationController
   def update
     @user = current_user
 
-    # パスワード変更あり
-    if user_params[:password].present?
-      if @user.valid_password?(params[:user][:current_password])
-        if @user.update(user_params)
-          # パスワード更新後に再ログイン（セッション維持）
-          bypass_sign_in(@user)
-          redirect_to edit_profile_path, notice: "パスワードを変更しました。"
-        else
-          flash.now[:alert] = "パスワードの変更に失敗しました。"
-          render :edit, status: :unprocessable_entity
-        end
-      else
-        flash.now[:alert] = "現在のパスワードが正しくありません。"
-        render :edit, status: :unprocessable_entity
-      end
-
-    # パスワード以外の更新
+    # モデル側の update_with_optional_password に全ロジックを任せる
+    if @user.update_with_optional_password(user_params)
+      bypass_sign_in(@user)  # 更新後もログイン維持
+      redirect_to edit_profile_path, notice: "プロフィールを更新しました。"
     else
-      if @user.update(user_params.except(:password, :password_confirmation))
-        redirect_to edit_profile_path, notice: "プロフィールを更新しました。"
-      else
-        flash.now[:alert] = "入力内容に誤りがあります。"
-        render :edit, status: :unprocessable_entity
-      end
+      flash.now[:alert] = @user.errors.full_messages.join("、")
+      render :edit, status: :unprocessable_entity
     end
   end
-
 
   private
 
   def user_params
     params.require(:user)
-          .permit(:name, :email, :password, :password_confirmation)
-  end
-
-  def password_blank?
-    params[:user][:password].blank? || params[:user][:password_confirmation].blank?
-  end
-
-  def password_mismatch?
-    params[:user][:password] != params[:user][:password_confirmation]
+          .permit(:name, :email, :password, :password_confirmation, :current_password)
   end
 end
