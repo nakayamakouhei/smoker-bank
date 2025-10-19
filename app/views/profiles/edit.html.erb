@@ -13,49 +13,59 @@
     <% end %>
 
     <%= form_with model: @user, url: profile_path, method: :patch, local: true, class: "space-y-6" do |f| %>
-      
-    <!-- ユーザー名 -->
-    <div class="text-left mb-4">
-      <%= f.label :name, class: "block text-sm font-medium text-gray-700" do %>
-        ユーザー名
-        <span class="text-red-500 text-xs ml-1">必須</span>
-      <% end %>
-      <%= f.text_field :name, class: "mt-1 block w-full p-2 border rounded" %>
-    </div>
 
-    <!-- メールアドレス -->
-    <div class="text-left mb-4">
-      <%= f.label :email, class: "block text-sm font-medium text-gray-700" do %>
-        メールアドレス
-        <span class="text-red-500 text-xs ml-1">必須</span>
-      <% end %>
-      <%= f.email_field :email, class: "mt-1 block w-full p-2 border rounded" %>
-    </div>
+      <!-- ユーザー名 -->
+      <div class="text-left mb-4">
+        <%= f.label :name, class: "block text-sm font-medium text-gray-700" do %>
+          ユーザー名
+          <span class="text-red-500 text-xs ml-1">必須</span>
+        <% end %>
+        <%= f.text_field :name, class: "mt-1 block w-full p-2 border rounded" %>
+      </div>
+
+      <!-- メールアドレス -->
+      <div class="text-left mb-4">
+        <%= f.label :email, class: "block text-sm font-medium text-gray-700" do %>
+          メールアドレス
+          <span class="text-red-500 text-xs ml-1">必須</span>
+        <% end %>
+        <%= f.email_field :email, class: "mt-1 block w-full p-2 border rounded" %>
+      </div>
 
       <hr class="my-4">
 
-      <!-- 現在のパスワード -->
-      <div class="text-left">
-        <%= f.label :current_password, "現在のパスワード", class: "block text-sm font-medium text-gray-700" %>
-        <%= f.password_field :current_password, class: "mt-1 block w-full p-2 border rounded" %>
-      </div>
+      <% if current_user.provider == "google_oauth2" && !current_user.password_set %>
+        <!-- Googleログインで、まだパスワード未設定の人 -->
+        <div class="p-3 bg-yellow-50 border border-yellow-300 rounded text-yellow-800 text-sm mb-4">
+          Googleログインで登録されています。<br>
+          下で新しいパスワードを設定すると、次回からメールアドレス＋パスワードでログインできるようになります。
+        </div>
+      <% else %>
+        <!-- 現在のパスワード入力欄（通常 or パスワード設定済みのGoogleユーザー） -->
+        <div class="text-left mb-4">
+          <%= f.label :current_password, "現在のパスワード", class: "block text-sm font-medium text-gray-700" %>
+          <%= f.password_field :current_password, class: "mt-1 block w-full p-2 border rounded" %>
+        </div>
+      <% end %>
 
       <!-- 新しいパスワード -->
-      <div class="text-left">
+      <div class="text-left mb-4">
         <%= f.label :password, "新しいパスワード", class: "block text-sm font-medium text-gray-700" %>
         <%= f.password_field :password, class: "mt-1 block w-full p-2 border rounded" %>
       </div>
 
       <!-- 新しいパスワード確認 -->
-      <div class="text-left">
+      <div class="text-left mb-6">
         <%= f.label :password_confirmation, "新しいパスワード（確認）", class: "block text-sm font-medium text-gray-700" %>
         <%= f.password_field :password_confirmation, class: "mt-1 block w-full p-2 border rounded" %>
       </div>
 
+      <!-- 保存ボタン -->
       <div>
         <%= f.submit "変更を保存する",
               class: "w-full bg-green-500 text-white py-2 rounded hover:bg-green-400 transition cursor-pointer" %>
       </div>
+
     <% end %>
   </div>
 </div>
