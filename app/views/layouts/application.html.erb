@@ -26,9 +26,13 @@
   </head>
 
   <body class="bg-gray-50 min-h-screen flex flex-col">
-    <%= render "layouts/header" %>
+    <!-- 固定ヘッダー -->
+    <div class="fixed top-0 left-0 w-full bg-white shadow z-50">
+      <%= render "layouts/header" %>
+    </div>
 
-    <main class="flex-grow">
+    <!-- ヘッダー分の余白を確保 -->
+    <main class="flex-grow pt-20">
       <%= yield %>
     </main>
 

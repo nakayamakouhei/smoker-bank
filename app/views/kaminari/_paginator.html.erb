@@ -1,0 +1,53 @@
+<!-- app/views/kaminari/_paginator.html.erb -->
+<%# モバイル向け Tailwind ページネーション %>
+<% if @histories.respond_to?(:total_pages) && @histories.total_pages > 1 %>
+  <nav class="flex justify-center mt-6 space-x-1" role="navigation" aria-label="Pagination">
+    <%# 前へ %>
+    <% if @histories.prev_page %>
+      <%= link_to "＜", url_for(page: @histories.prev_page),
+          class: "px-3 py-2 bg-white border border-gray-300 text-gray-600 rounded hover:bg-gray-100 active:scale-95 transition" %>
+    <% else %>
+      <span class="px-3 py-2 border border-gray-200 text-gray-400 rounded bg-gray-100">＜</span>
+    <% end %>
+
+    <%# ページ番号を中央付近のみ表示（例：5ページ以上のとき省略表示） %>
+    <% visible_range = 2 %>
+    <% start_page = [@histories.current_page - visible_range, 1].max %>
+    <% end_page = [@histories.current_page + visible_range, @histories.total_pages].min %>
+
+    <% if start_page > 1 %>
+      <%= link_to 1, url_for(page: 1),
+          class: "px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-green-100" %>
+      <% if start_page > 2 %>
+        <span class="px-2 py-2 text-gray-400">…</span>
+      <% end %>
+    <% end %>
+
+    <% (start_page..end_page).each do |page| %>
+      <% if page == @histories.current_page %>
+        <span class="px-3 py-2 bg-green-500 text-white font-semibold rounded shadow-sm cursor-default">
+          <%= page %>
+        </span>
+      <% else %>
+        <%= link_to page, url_for(page: page),
+            class: "px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-green-100 active:scale-95 transition" %>
+      <% end %>
+    <% end %>
+
+    <% if end_page < @histories.total_pages %>
+      <% if end_page < @histories.total_pages - 1 %>
+        <span class="px-2 py-2 text-gray-400">…</span>
+      <% end %>
+      <%= link_to @histories.total_pages, url_for(page: @histories.total_pages),
+          class: "px-3 py-2 bg-white border border-gray-300 text-gray-700 rounded hover:bg-green-100" %>
+    <% end %>
+
+    <%# 次へ %>
+    <% if @histories.next_page %>
+      <%= link_to "＞", url_for(page: @histories.next_page),
+          class: "px-3 py-2 bg-white border border-gray-300 text-gray-600 rounded hover:bg-gray-100 active:scale-95 transition" %>
+    <% else %>
+      <span class="px-3 py-2 border border-gray-200 text-gray-400 rounded bg-gray-100">＞</span>
+    <% end %>
+  </nav>
+<% end %>
