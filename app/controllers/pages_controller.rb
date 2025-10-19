@@ -9,11 +9,11 @@ class PagesController < ApplicationController
     name = params[:name]
     email = params[:email]
     message = params[:message]
-  
+
     # SendGrid経由で送信
     SendgridMailer.contact_admin(name, email, message)
     SendgridMailer.contact_user(name, email)
-  
+
     redirect_to contact_complete_path
   end
 

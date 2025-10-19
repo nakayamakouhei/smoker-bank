@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
+         :omniauthable, omniauth_providers: [ :google_oauth2 ]
 
   # 既存の銘柄とログ
   has_many :smokes, dependent: :destroy
@@ -54,13 +54,13 @@ class User < ApplicationRecord
   # パスワード更新ロジック
   def update_with_optional_password(params)
     clean_params = params.except(:current_password)
-  
+
     if provider == "google_oauth2" && !password_set
       success = update(clean_params)
       update(password_set: true) if success && clean_params[:password].present?
       return success
     end
-  
+
     if clean_params[:password].present?
       if valid_password?(params[:current_password])
         success = update(clean_params)
