@@ -9,13 +9,11 @@ class PagesController < ApplicationController
     name = params[:name]
     email = params[:email]
     message = params[:message]
-
-    # 管理者（あなた）宛てに送信
-    ContactMailer.send_contact(name, email, message).deliver_now
-
-    # 送信者（ユーザー）宛てに自動返信
-    ContactMailer.reply_to_user(name, email).deliver_now
-
+  
+    # SendGrid経由で送信
+    SendgridMailer.contact_admin(name, email, message)
+    SendgridMailer.contact_user(name, email)
+  
     redirect_to contact_complete_path
   end
 

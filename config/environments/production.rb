@@ -47,9 +47,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
 
   # Replace the default in-process memory cache store with a durable alternative.
-  # config/environments/production.rb
   config.cache_store = :memory_store, { size: 64.megabytes }
-
 
   # Replace the default in-process and non-durable queuing backend for Active Job.
   # config.active_job.queue_adapter = :solid_queue
@@ -63,13 +61,15 @@ Rails.application.configure do
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "smoker-bank.onrender.com", protocol: "https" }
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via rails credentials:edit.
+  # config.action_mailer.delivery_method = :smtp
   # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
+  #   address:              "smtp.sendgrid.net",
+  #   port:                 587,
+  #   domain:               "smoker-bank.onrender.com",
+  #   user_name:            "apikey",
+  #   password:             ENV["SENDGRID_API_KEY"],
+  #   authentication:       :plain,
+  #   enable_starttls_auto: true
   # }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
@@ -90,18 +90,4 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
-
-  # --- SendGrid SMTP 設定 ---
-  config.action_mailer.delivery_method = :smtp
-  config.action_mailer.smtp_settings = {
-    user_name: "apikey", # ← 固定値（SendGridの仕様）
-    password: ENV["SENDGRID_API_KEY"], # ← Renderの環境変数から読み取る
-    domain: "smoker-bank.onrender.com",
-    address: "smtp.sendgrid.net",
-    port: 587,
-    authentication: :plain,
-    enable_starttls_auto: true
-  }
-
-  config.action_mailer.default_url_options = { host: "smoker-bank.onrender.com", protocol: "https" }
 end
