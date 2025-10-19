@@ -91,16 +91,15 @@ Rails.application.configure do
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  # --- Gmail SMTP 設定 ---
+  # --- SendGrid SMTP 設定 ---
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    address:              "smtp.gmail.com",
-    port:                 465,
-    domain:               "gmail.com",
-    user_name:            ENV["MAIL_USER"],
-    password:             ENV["MAIL_PASSWORD"],
-    authentication:       "plain",
-    ssl:                  true,
+    user_name: "apikey", # ← 固定値（SendGridの仕様）
+    password: ENV["SENDGRID_API_KEY"], # ← Renderの環境変数から読み取る
+    domain: "smoker-bank.onrender.com",
+    address: "smtp.sendgrid.net",
+    port: 587,
+    authentication: :plain,
     enable_starttls_auto: true
   }
 
