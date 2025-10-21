@@ -9,6 +9,9 @@ Rails.application.routes.draw do
     get "password_reset_sent", to: "users/passwords#sent", as: :password_reset_sent
     # パスワード変更完了ページ
     get "password_reset_done", to: "users/passwords#done", as: :password_reset_done
+
+    # `/users` への直接アクセスは新規登録画面へリダイレクト
+    get "/users", to: redirect("/users/sign_up")
   end
 
   get "terms", to: "pages#terms", as: :terms
