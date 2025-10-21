@@ -32,8 +32,25 @@
     </div>
 
     <!-- ヘッダー分の余白を確保 -->
-    <main class="flex-grow flex flex-col pt-20">
-      <%= yield %>
+    <main class="flex-grow flex flex-col pt-20 px-4">
+      <% flash.each do |type, message| %>
+        <% next if message.blank? %>
+        <% css_classes = case type.to_sym
+                        when :notice
+                          "bg-green-100 text-green-800 border-green-200"
+                        when :alert, :error
+                          "bg-red-100 text-red-800 border-red-200"
+                        else
+                          "bg-blue-100 text-blue-800 border-blue-200"
+                        end %>
+        <div class="mx-auto mb-4 w-full max-w-xl rounded border px-4 py-2 text-sm shadow <%= css_classes %>">
+          <%= message %>
+        </div>
+      <% end %>
+
+      <div class="flex-1 flex flex-col">
+        <%= yield %>
+      </div>
     </main>
 
     <%= render "layouts/footer" %>
