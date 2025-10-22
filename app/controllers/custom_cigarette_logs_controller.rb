@@ -13,6 +13,12 @@ class CustomCigaretteLogsController < ApplicationController
   def destroy
     @log = current_user.custom_cigarette_logs.find(params[:id])
     @log.destroy
-    redirect_to histories_path, notice: "履歴を削除しました"
+    redirect_to histories_path(history_filter_params), notice: "履歴を削除しました"
+  end
+
+  private
+
+  def history_filter_params
+    params.permit(:sort, :start_date, :end_date, :page).to_h
   end
 end

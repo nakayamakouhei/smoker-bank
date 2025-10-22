@@ -1,57 +1,63 @@
 <!-- app/views/histories/_list.html.erb -->
+<% current_query = params.to_unsafe_h.slice("sort", "start_date", "end_date", "page").compact %>
+
 <% if histories.any? %>
-  <ul class="divide-y divide-gray-200 bg-white border border-gray-200 rounded-lg shadow-sm">
+  <div class="space-y-3">
     <% histories.each do |log| %>
-      <li class="flex justify-between items-center px-4 py-3 hover:bg-gray-50 transition">
-        <!-- 左側：日付・銘柄名・箱数 -->
-        <div class="flex flex-col text-gray-700">
-          <span class="text-sm text-gray-500">
-            <%= l log.bought_date, format: :short %>
-          </span>
-
-          <% if log.is_a?(Smoke) %>
-            <span class="text-base font-semibold text-gray-800">
-              🚬 <%= log.cigarette.name %>
-            </span>
-          <% else %>
-            <span class="text-base font-semibold text-gray-800">
-              🌿 <%= log.custom_cigarette.name %>（オリジナル）
-            </span>
-          <% end %>
-
-          <span class="text-sm text-gray-600">
-            <%= log.packs %>箱
-          </span>
+      <% price = log.is_a?(Smoke) ? log.cigarette.price * log.packs : log.custom_cigarette.price * log.packs %>
+      <div class="flex flex-col gap-3 rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md md:flex-row md:items-center md:justify-between">
+        <div class="flex items-start gap-3">
+          <div class="flex h-12 w-12 items-center justify-center rounded-full bg-green-100 text-2xl">
+            <% if log.is_a?(Smoke) %>
+              🚬
+            <% else %>
+              🌿
+            <% end %>
+          </div>
+          <div>
+            <p class="text-sm text-gray-500">
+              <%= l log.bought_date, format: :long %>
+            </p>
+            <p class="text-lg font-semibold text-gray-800">
+              <% if log.is_a?(Smoke) %>
+                <%= log.cigarette.name %>
+              <% else %>
+                <%= log.custom_cigarette.name %>（オリジナル）
+              <% end %>
+            </p>
+            <p class="text-sm text-gray-600">購入数：<%= log.packs %>箱</p>
+          </div>
         </div>
 
-        <!-- 右側：金額 + 削除ボタン -->
-        <div class="flex flex-col items-end space-y-1 text-right">
-          <% price = log.is_a?(Smoke) ? log.cigarette.price * log.packs : log.custom_cigarette.price * log.packs %>
-          <span class="text-lg font-bold text-green-700">
-            <%= number_to_currency(price, unit: "", precision: 0) %>円
-          </span>
-
+        <div class="flex items-end justify-between gap-4 md:flex-col md:items-end">
+          <div class="text-right">
+            <p class="text-xs font-semibold uppercase tracking-wide text-gray-400">支払金額</p>
+            <p class="text-xl font-bold text-green-600 sm:text-2xl"><%= number_to_currency(price, unit: "", precision: 0) %>円</p>
+          </div>
           <% if log.is_a?(Smoke) %>
             <%= button_to "削除", smoke_path(log),
                   method: :delete,
-                  data: { turbo: false, confirm: "この履歴を削除しますか？" },
-                  class: "text-xs text-red-600 hover:text-red-800 underline cursor-pointer" %>
+                  params: current_query,
+                  data: { turbo: false },
+                  class: "inline-flex items-center gap-1 rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 cursor-pointer" %>
           <% else %>
             <%= button_to "削除", custom_cigarette_log_path(log),
                   method: :delete,
-                  data: { turbo: false, confirm: "この履歴を削除しますか？" },
-                  class: "text-xs text-red-600 hover:text-red-800 underline cursor-pointer" %>
+                  params: current_query,
+                  data: { turbo: false },
+                  class: "inline-flex items-center gap-1 rounded-full border border-red-200 px-3 py-1 text-xs font-semibold text-red-600 transition hover:bg-red-50 cursor-pointer" %>
           <% end %>
         </div>
-      </li>
+      </div>
     <% end %>
-  </ul>
+  </div>
 
   <!-- ページネーション -->
-  <div class="mt-6 flex justify-center">
-    <%# ページネーションは後で有効化予定 %>
+  <div class="mt-8 flex justify-center">
     <%= paginate histories %>
   </div>
 <% else %>
-  <p class="text-center text-gray-500 mt-8">履歴がまだありません。</p>
+  <div class="rounded-xl border border-dashed border-gray-300 bg-white py-16 text-center text-gray-500">
+    履歴がまだありません。
+  </div>
 <% end %>
