@@ -7,12 +7,18 @@ class CustomCigaretteLogsController < ApplicationController
       packs: params[:custom_cigarette_log][:packs],
       bought_date: Date.today
     )
-    redirect_to authenticated_root_path, notice: "オリジナル銘柄を登録しました"
+    redirect_to authenticated_root_path, notice: "箱数をカウントしました"
   end
 
   def destroy
     @log = current_user.custom_cigarette_logs.find(params[:id])
     @log.destroy
-    redirect_to histories_path, notice: "履歴を削除しました"
+    redirect_to histories_path(history_filter_params), notice: "履歴を削除しました"
+  end
+
+  private
+
+  def history_filter_params
+    params.permit(:sort, :start_date, :end_date, :page).to_h
   end
 end
