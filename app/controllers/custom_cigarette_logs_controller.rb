@@ -7,7 +7,7 @@ class CustomCigaretteLogsController < ApplicationController
       packs: params[:custom_cigarette_log][:packs],
       bought_date: Date.today
     )
-    redirect_to authenticated_root_path, notice: "オリジナル銘柄を登録しました"
+    redirect_to authenticated_root_path, notice: "箱数をカウントしました"
   end
 
   def destroy

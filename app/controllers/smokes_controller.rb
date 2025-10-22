@@ -11,10 +11,7 @@ class SmokesController < ApplicationController
     @total_amount = current_user.total_amount
     @total_packs  = current_user.total_packs
 
-    respond_to do |format|
-      format.turbo_stream
-      format.html { redirect_to authenticated_root_path }
-    end
+    redirect_to authenticated_root_path, notice: "箱数をカウントしました"
   end
 
   def destroy

@@ -44,7 +44,9 @@
                           "bg-blue-100 text-blue-800 border-blue-200"
                         end %>
         <% next if controller_name == "profiles" %>
-        <div class="mx-auto mb-4 w-full max-w-xl rounded border px-4 py-2 text-sm shadow <%= css_classes %>">
+        <% auto_dismiss = (type.to_sym == :notice && message == "箱数をカウントしました") %>
+        <div class="mx-auto mb-4 w-full max-w-xl rounded border px-4 py-2 text-sm shadow <%= css_classes %> <%= auto_dismiss ? 'flash-auto-dismiss opacity-100 transition-opacity duration-500' : '' %>"
+             data-auto-dismiss="<%= auto_dismiss %>">
           <%= message %>
         </div>
       <% end %>
@@ -53,7 +55,19 @@
         <%= yield %>
       </div>
     </main>
-
     <%= render "layouts/footer" %>
+
+    <script>
+      document.addEventListener("turbo:load", function() {
+        document.querySelectorAll('[data-auto-dismiss="true"]').forEach(function(el) {
+          setTimeout(function() {
+            el.classList.add("opacity-0");
+            setTimeout(function() {
+              if (el && el.parentNode) { el.parentNode.removeChild(el); }
+            }, 500);
+          }, 5000);
+        });
+      });
+    </script>
   </body>
 </html>

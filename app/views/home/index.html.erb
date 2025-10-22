@@ -38,13 +38,13 @@
           </div>
           <div class="flex-1">
             <p class="text-xs font-semibold uppercase tracking-wide text-lime-700">現在の銘柄</p>
-            <div class="mt-1 flex flex-wrap items-center gap-2 text-2xl font-bold text-slate-900">
-              <span class="truncate"><%= current_user.current_cigarette&.name ||
-                                         current_user.current_custom_cigarette&.name ||
-                                         "未選択" %></span>
-              <%= link_to "変更", select_cigarettes_path,
-                    class: "text-xs font-semibold text-emerald-600 underline" %>
-            </div>
+          <div class="mt-1 flex flex-wrap items-center gap-2 text-2xl font-bold text-slate-900">
+            <span class="max-w-[200px] truncate sm:max-w-[260px]"><%= current_user.current_cigarette&.name ||
+                                       current_user.current_custom_cigarette&.name ||
+                                       "未選択" %></span>
+            <%= link_to "変更", select_cigarettes_path,
+                  class: "text-xs font-semibold text-emerald-600 underline" %>
+          </div>
           </div>
         </div>
       </div>
@@ -61,7 +61,7 @@
                       {},
                       class: "w-28 rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
               </div>
-              <%= f.submit "登録",
+              <%= f.submit "カウント",
                     class: "w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-emerald-400 cursor-pointer" %>
             <% end %>
           <% elsif current_user.current_custom_cigarette.present? %>
@@ -72,7 +72,7 @@
                       {},
                       class: "w-28 rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
               </div>
-              <%= f.submit "登録",
+              <%= f.submit "カウント",
                     class: "w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-emerald-400 cursor-pointer" %>
             <% end %>
           <% else %>
