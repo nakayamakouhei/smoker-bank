@@ -83,10 +83,14 @@
     </div>
   </div>
 
+  <% tweet_text = "今日も #SmokerBank で喫煙記録！\n合計#{number_to_currency(@total_amount, unit: '', precision: 0)}円使ってるみたい！\nhttps://smoker-bank.onrender.com/" %>
+  <% tweet_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_text)}" %>
+
   <div class="mt-6 w-full max-w-md space-y-3">
     <%= link_to "買えたものリストを見る", items_path,
           class: "block w-full rounded-lg bg-emerald-600 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-500" %>
-    <%= link_to "Xで共有", "#",
-          class: "block w-full rounded-lg bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5" %>
+    <%= link_to "Xで共有", tweet_url,
+          class: "block w-full rounded-lg bg-slate-900 px-4 py-3 text-center text-sm font-semibold text-white shadow-lg transition hover:-translate-y-0.5",
+          target: "_blank", rel: "noopener" %>
   </div>
 </div>
