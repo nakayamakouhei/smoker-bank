@@ -1,22 +1,42 @@
-<div class="container mx-auto max-w-md py-8 space-y-6">
-  <h1 class="text-2xl font-bold mb-4">お問い合わせ</h1>
-
-  <%= form_with url: send_contact_path, method: :post, local: true do |f| %>
-    <div class="mb-4">
-      <%= f.label :name, "お名前", class: "block font-bold" %>
-      <%= f.text_field :name, class: "border rounded w-full px-2 py-1" %>
+<div class="flex flex-col items-center flex-1 px-4 py-8">
+  <div class="w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+    <div class="bg-gradient-to-r from-emerald-500 to-sky-500 px-6 py-6 text-left">
+      <p class="text-xs font-semibold uppercase tracking-widest text-white/70">Contact</p>
+      <h1 class="mt-2 text-2xl font-bold text-white">お問い合わせ</h1>
+      <p class="mt-1 text-xs text-white/80">ご質問やご要望など、お気軽にお送りください。</p>
     </div>
 
-    <div class="mb-4">
-      <%= f.label :email, "メールアドレス", class: "block font-bold" %>
-      <%= f.email_field :email, class: "border rounded w-full px-2 py-1" %>
-    </div>
+    <div class="space-y-6 px-6 py-6">
+      <%= form_with url: send_contact_path, method: :post, local: true, class: "space-y-4" do |f| %>
+        <div class="space-y-2">
+          <%= f.label :name, "お名前", class: "text-sm font-semibold text-slate-800" %>
+          <%= f.text_field :name,
+                class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500",
+                placeholder: "例）山田 太郎" %>
+        </div>
 
-    <div class="mb-4">
-      <%= f.label :message, "お問い合わせ内容", class: "block font-bold" %>
-      <%= f.text_area :message, class: "border rounded w-full px-2 py-1 h-32" %>
-    </div>
+        <div class="space-y-2">
+          <%= f.label :email, "メールアドレス", class: "text-sm font-semibold text-slate-800" %>
+          <%= f.email_field :email,
+                class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500",
+                placeholder: "example@mail.com" %>
+        </div>
 
-    <%= f.submit "送信する", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 cursor-pointer" %>
-  <% end %>
+        <div class="space-y-2">
+          <%= f.label :message, "お問い合わせ内容", class: "text-sm font-semibold text-slate-800" %>
+          <%= f.text_area :message,
+                rows: 5,
+                class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500",
+                placeholder: "ご用件をできるだけ詳しくご入力ください。" %>
+        </div>
+
+        <%= f.submit "送信する",
+              class: "w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:bg-emerald-400 cursor-pointer" %>
+      <% end %>
+
+      <div class="rounded-xl border border-dashed border-emerald-200 bg-emerald-50/70 px-4 py-4 text-xs text-emerald-700">
+        メールを確認次第、順次ご回答いたします。内容によってはお時間をいただく場合がございます。
+      </div>
+    </div>
+  </div>
 </div>
