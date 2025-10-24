@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::Base
   # モダンブラウザ対応のみ許可（Rails標準の安全設定）
-  allow_browser versions: :modern
+  allow_browser versions: {
+    modern: :latest,
+    mobile_safari: :latest,
+    safari: :latest
+  }
 
   protect_from_forgery with: :exception
 
