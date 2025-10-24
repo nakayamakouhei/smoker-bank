@@ -1,54 +1,68 @@
-<div class="flex flex-col items-center pt-16">
+<div class="flex flex-col items-center flex-1 px-4 py-8">
+  <div class="w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+    <div class="bg-gradient-to-r from-violet-500 to-indigo-500 px-6 py-6 text-left">
+      <p class="text-xs font-semibold uppercase tracking-widest text-white/70">What If</p>
+      <h1 class="mt-2 text-2xl font-bold text-white">もしタバコを買っていなかったら…</h1>
+      <p class="mt-1 text-xs text-white/80">累計金額で買えるアイテムをカテゴリー別にチェックできます。</p>
+    </div>
 
+    <div class="space-y-6 px-6 py-6">
+      <div class="rounded-xl border border-indigo-200 bg-indigo-50/70 px-4 py-4 text-center shadow-sm">
+        <p class="text-xs font-semibold uppercase tracking-wide text-indigo-700">累計金額</p>
+        <p class="mt-2 text-3xl font-bold text-slate-900">¥<%= number_with_delimiter(@total_amount) %></p>
+        <p class="mt-1 text-xs text-indigo-600">この金額で次のようなアイテムが手に入ります。</p>
+      </div>
 
-  <!-- 金額表示 -->
-  <div class="bg-white shadow-md rounded-xl px-8 py-6 text-center mb-6 w-80 border">
-    <p class="text-gray-700 text-sm mb-2">あなたがタバコに使った金額は…</p>
-    <p class="text-4xl font-bold text-green-600 mb-1">
-      ¥<%= number_with_delimiter(@total_amount) %>
-    </p>
-    <p class="text-xs text-gray-400">もし吸っていなかったら、これが買えたかも！</p>
+      <div class="flex items-center justify-center gap-2 text-xs text-gray-500">
+        <span>powered by</span>
+        <%= image_tag "rakuten_logo.png", alt: "Rakuten", class: "h-4" %>
+      </div>
+
+      <ul class="divide-y divide-gray-200 rounded-xl border border-gray-100 bg-gray-50/80">
+        <% categories = [
+          "禁煙グッズ",
+          "メンズ ファッション",
+          "レディース ファッション",
+          "バッグ・小物・ブランド雑貨",
+          "ジュエリー・アクセサリー",
+          "腕時計",
+          "美容・コスメ・香水",
+          "医薬品・コンタクト・介護",
+          "家電",
+          "パソコン・周辺機器",
+          "スマートフォン・タブレット",
+          "インテリア・寝具・収納",
+          "日用品雑貨・文房具・手芸",
+          "スポーツ・アウトドア",
+          "自転車・車・バイク",
+          "おもちゃ・ホビー・ゲーム",
+          "ベビー・キッズ・マタニティ",
+          "食品",
+          "スイーツ・お菓子",
+          "ドリンク・お酒",
+          "ペット・ペットグッズ",
+          "花・ガーデン・DIY",
+          "サービス・リフォーム"
+        ] %>
+
+        <% categories.each do |category| %>
+          <% rakuten_url = "https://search.rakuten.co.jp/search/mall/#{CGI.escape(category)}/?max=#{@total_amount}&s=3" %>
+          <li>
+            <%= link_to rakuten_url,
+                  target: "_blank",
+                  rel: "noopener",
+                  class: "flex items-center justify-between gap-2 px-4 py-3 text-sm text-slate-800 transition hover:bg-white" do %>
+              <span><%= category %></span>
+              <span class="text-xs text-indigo-500">見る →</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
   </div>
 
-  <!-- powered by Rakuten -->
-  <div class="flex items-center space-x-1 mb-4">
-    <p class="text-xs text-gray-500">powered by</p>
-    <%= image_tag "rakuten_logo.png", alt: "Rakuten", class: "h-4" %>
+  <div class="mt-6 w-full max-w-md">
+    <%= link_to "ホームに戻る", authenticated_root_path,
+          class: "block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-semibold text-emerald-600 shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-50" %>
   </div>
-
-  <!-- カテゴリリスト -->
-  <div class="bg-white shadow-md rounded-lg divide-y w-80 mb-12">
-    <% [
-      "禁煙グッズ",
-      "メンズ ファッション",
-      "レディース ファッション",
-      "バッグ・小物・ブランド雑貨",
-      "ジュエリー・アクセサリー",
-      "腕時計",
-      "美容・コスメ・香水",
-      "医薬品・コンタクト・介護",
-      "家電",
-      "パソコン・周辺機器",
-      "スマートフォン・タブレット",
-      "インテリア・寝具・収納",
-      "日用品雑貨・文房具・手芸",
-      "スポーツ・アウトドア",
-      "自転車・車・バイク",
-      "おもちゃ・ホビー・ゲーム",
-      "ベビー・キッズ・マタニティ",
-      "食品",
-      "スイーツ・お菓子",
-      "ドリンク・お酒",
-      "ペット・ペットグッズ",
-      "花・ガーデン・DIY",
-      "サービス・リフォーム"
-    ].each do |category| %>
-      <% rakuten_url = "https://search.rakuten.co.jp/search/mall/#{CGI.escape(category)}/?max=#{@total_amount}&s=3" %>
-      <%= link_to category, rakuten_url,
-          target: "_blank",
-          rel: "noopener",
-          class: "block px-4 py-3 text-left hover:bg-gray-100 text-gray-800" %>
-    <% end %>
-  </div>
-
 </div>
