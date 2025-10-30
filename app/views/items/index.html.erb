@@ -1,5 +1,6 @@
 <div class="flex flex-col items-center flex-1 px-4 py-8">
-  <div class="w-full max-w-md overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+  <div class="w-full max-w-md lg:max-w-5xl lg:flex lg:flex-col">
+    <div class="w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
     <div class="bg-gradient-to-r from-violet-500 to-indigo-500 px-6 py-6 text-left">
       <p class="text-xs font-semibold uppercase tracking-widest text-white/70">What If</p>
       <h1 class="mt-2 text-2xl font-bold text-white">もしタバコを買っていなかったら…</h1>
@@ -18,7 +19,8 @@
         <%= image_tag "rakuten_logo.png", alt: "Rakuten", class: "h-4" %>
       </div>
 
-      <ul class="divide-y divide-gray-200 rounded-xl border border-gray-100 bg-gray-50/80">
+      <div class="rounded-xl border border-gray-100 bg-gray-50/80 p-2 lg:p-4">
+        <ul class="divide-y divide-gray-200 rounded-xl border border-gray-100 bg-gray-50/80 lg:grid lg:grid-cols-3 lg:gap-4 lg:divide-y-0 lg:border-0 lg:bg-transparent">
         <% categories = [
           "禁煙グッズ",
           "メンズ ファッション",
@@ -47,22 +49,25 @@
 
         <% categories.each do |category| %>
           <% rakuten_url = "https://search.rakuten.co.jp/search/mall/#{CGI.escape(category)}/?max=#{@total_amount}&s=3" %>
-          <li>
+          <li class="lg:rounded-xl lg:border lg:border-gray-100 lg:bg-white">
             <%= link_to rakuten_url,
                   target: "_blank",
                   rel: "noopener",
-                  class: "flex items-center justify-between gap-2 px-4 py-3 text-sm text-slate-800 transition hover:bg-white" do %>
-              <span><%= category %></span>
-              <span class="text-xs text-indigo-500">見る →</span>
+                  class: "flex items-center justify-between gap-2 px-4 py-3 text-sm text-slate-800 transition hover:bg-white lg:hover:shadow" do %>
+              <span class="text-left"><%= category %></span>
+              <span class="text-xs text-indigo-500 whitespace-nowrap">見る →</span>
             <% end %>
           </li>
         <% end %>
-      </ul>
+        </ul>
+      </div>
+    </div>
     </div>
   </div>
 
-  <div class="mt-6 w-full max-w-md">
+  <div class="mt-6 w-full max-w-md lg:max-w-5xl">
     <%= link_to "ホームに戻る", authenticated_root_path,
-          class: "block w-full rounded-lg bg-white px-4 py-2 text-center text-sm font-semibold text-emerald-600 shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-50" %>
+          class: "block w-full rounded-lg bg-white px-4 py-3 text-center text-sm font-semibold text-emerald-600 shadow-lg transition hover:-translate-y-0.5 hover:bg-emerald-50" %>
   </div>
+
 </div>
