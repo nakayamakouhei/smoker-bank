@@ -13,14 +13,14 @@
          end %>
       <% selected_cigarette = @cigarettes.find { |c| c.id == current_user.current_cigarette_id } %>
       <%= form_with url: update_selection_cigarettes_path, method: :patch, local: true, class: "space-y-4" do |f| %>
-        <div class="space-y-2">
+        <div class="space-y-2" data-controller="tom-select">
           <label for="current_cigarette_select" class="block text-sm font-semibold text-slate-800">既存の銘柄</label>
           <%= select_tag :current_cigarette_id,
                 options_for_select(option_items, current_user.current_cigarette_id),
-                include_blank: "選択してください",
+                data: { "tom-select-target": "select" },
                 id: "current_cigarette_select",
-                class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
-          <p class="text-xs text-slate-500">価格: <span id="cigarette-price"><%= selected_cigarette ? number_to_currency(selected_cigarette.price, unit: '', precision: 0) + '円' : '―' %></span></p>
+                class: "w-full text-sm focus:outline-none" %>
+          <p class="text-xs text-slate-500">価格: <span data-tom-select-target="price"><%= selected_cigarette ? number_to_currency(selected_cigarette.price, unit: '', precision: 0) + '円' : '―' %></span></p>
         </div>
 
         <%= f.submit "この銘柄に変更する",
@@ -44,27 +44,3 @@
     </div>
   <% end %>
 </div>
-
-<%= javascript_tag do %>
-  document.addEventListener("turbo:load", function() {
-    var select = document.getElementById("current_cigarette_select");
-    if (!select) return;
-    var priceEl = document.getElementById("cigarette-price");
-    if (!priceEl) return;
-
-    var formatPrice = function(value) {
-      if (!value) return "―";
-      var number = Number(value);
-      if (isNaN(number)) return "―";
-      return number.toLocaleString() + "円";
-    };
-
-    var updatePrice = function() {
-      var option = select.options[select.selectedIndex];
-      priceEl.textContent = option && option.dataset.price ? formatPrice(option.dataset.price) : "―";
-    };
-
-    updatePrice();
-    select.addEventListener("change", updatePrice);
-  });
-<% end %>

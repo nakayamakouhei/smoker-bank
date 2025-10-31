@@ -2,7 +2,7 @@ class CigarettesController < ApplicationController
   before_action :authenticate_user!
 
   def select
-    @cigarettes = Cigarette.all
+    @cigarettes = Cigarette.order(:position, :id)
   end
 
   # routes.rbで呼び出し

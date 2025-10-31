@@ -9,3 +9,6 @@ application.register("hello", HelloController)
 
 import MenuController from "./menu_controller"
 application.register("menu", MenuController)
+
+import TomSelectController from "./tom_select_controller"
+application.register("tom-select", TomSelectController)
