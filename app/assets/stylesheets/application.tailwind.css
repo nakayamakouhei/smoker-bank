@@ -1,4 +1,15 @@
 @import "tailwindcss";
+@import "tom-select/dist/css/tom-select.css";
+
+@layer components {
+  .ts-wrapper {
+    @apply relative block;
+  }
+
+  .ts-wrapper .tom-select-clear {
+    @apply absolute right-3 top-1/2 flex h-6 w-6 -translate-y-1/2 items-center justify-center rounded-full text-slate-400 transition hover:text-slate-600 z-20;
+  }
+}
 
 /* === フェードインアニメーション === */
 @layer utilities {
