@@ -1,4 +1,8 @@
 @import "tailwindcss";
+@plugin "daisyui" {
+  themes: all;
+  default: "cupcake";
+}
 @import "tom-select/dist/css/tom-select.css";
 
 @layer components {
