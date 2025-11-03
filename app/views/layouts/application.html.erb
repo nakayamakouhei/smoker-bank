@@ -57,6 +57,14 @@
     </main>
     <%= render "layouts/footer" %>
 
+    <!-- ローディングスピナー -->
+    <div
+      data-controller="loading"
+      data-loading-target="overlay"
+      class="hidden fixed inset-0 flex items-center justify-center bg-white/70 backdrop-blur-sm opacity-0 transition-opacity duration-300 z-[9999]">
+      <span class="loading loading-spinner text-emerald-500 w-12 h-12"></span>
+    </div>
+
     <script>
       document.addEventListener("turbo:load", function() {
         document.querySelectorAll('[data-auto-dismiss="true"]').forEach(function(el) {
