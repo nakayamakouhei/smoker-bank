@@ -28,6 +28,30 @@ class User < ApplicationRecord
     smokes.sum(:packs) + custom_cigarette_logs.sum(:packs)
   end
 
+  # 月毎の集計（指定年）
+  def monthly_amounts(year: Time.zone.today.year)
+    target_year = year.to_i
+    start_time = Time.zone.local(target_year, 1, 1).beginning_of_day
+    end_time = start_time.end_of_year
+
+    range = start_time..end_time
+
+    smokes_data = smokes.joins(:cigarette)
+                        .where(created_at: range)
+                        .group_by_month(:created_at, range:, format: "%Y-%m")
+                        .sum("smokes.packs * cigarettes.price")
+
+    custom_data = custom_cigarette_logs.joins(:custom_cigarette)
+                                       .where(created_at: range)
+                                       .group_by_month(:created_at, range:, format: "%Y-%m")
+                                       .sum("custom_cigarette_logs.packs * custom_cigarettes.price")
+
+    combined = smokes_data.merge(custom_data) { |_month, a, b| a + b }
+
+    months = (0..11).map { |i| start_time.advance(months: i).strftime("%Y-%m") }
+    months.index_with { |month| combined.fetch(month, 0) }
+  end
+
   # Googleログイン
   def self.from_omniauth(auth)
     user = find_by(email: auth.info.email)
@@ -75,7 +99,7 @@ class User < ApplicationRecord
     end
   end
 
-  # ✅ Devise通知をSendGrid APIで処理
+  # Devise通知をSendGrid APIで処理
   def send_devise_notification(notification, *args)
     if notification == :reset_password_instructions
       token = args.first
