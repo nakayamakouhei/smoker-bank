@@ -53,4 +53,7 @@ Rails.application.routes.draw do
   resources :histories, only: [ :index ]
   resources :items, only: [ :index ]
   resource :profile, only: [ :edit, :update ]
+
+  # プッシュ通知用
+  resources :push_subscriptions, only: [ :create ]
 end

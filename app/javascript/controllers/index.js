@@ -15,3 +15,6 @@ application.register("menu", MenuController)
 
 import TomSelectController from "./tom_select_controller"
 application.register("tom-select", TomSelectController)
+
+import PushController from "./push_controller"
+application.register("push", PushController)

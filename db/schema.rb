@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2025_10_19_033444) do
+ActiveRecord::Schema[7.2].define(version: 2025_11_10_115715) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -43,6 +43,16 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_19_033444) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_custom_cigarettes_on_user_id"
+  end
+
+  create_table "push_subscriptions", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.text "endpoint"
+    t.text "p256dh"
+    t.text "auth"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_push_subscriptions_on_user_id"
   end
 
   create_table "smokes", force: :cascade do |t|
@@ -78,6 +88,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_10_19_033444) do
   add_foreign_key "custom_cigarette_logs", "custom_cigarettes"
   add_foreign_key "custom_cigarette_logs", "users"
   add_foreign_key "custom_cigarettes", "users"
+  add_foreign_key "push_subscriptions", "users"
   add_foreign_key "smokes", "cigarettes"
   add_foreign_key "smokes", "users"
   add_foreign_key "users", "cigarettes", column: "current_cigarette_id"
