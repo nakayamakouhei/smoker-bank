@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   # ログイン済みユーザー
   authenticated :user do
     root "home#index", as: :authenticated_root
+      # 通知時刻の更新
+    resource :user, only: [] do
+      patch :update_notification_time
+    end
   end
 
   resources :items, only: [ :index ]

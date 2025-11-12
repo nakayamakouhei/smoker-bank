@@ -1,0 +1,25 @@
+<div data-modal-target="overlay" class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50">
+  <div data-modal-target="content" class="bg-white rounded-2xl p-6 w-80 relative">
+    <h2 class="text-lg font-bold mb-4 text-gray-800">通知の時刻を設定</h2>
+
+    <%= form_with url: update_notification_time_user_path, method: :patch, local: true do |f| %>
+      <%= f.time_field :notification_time,
+            id: "notification_time",
+            class: "w-full border rounded-lg px-3 py-2 mb-4",
+            value: current_user.notification_time&.strftime('%H:%M') %>
+
+      <div class="flex justify-end gap-2">
+        <button
+          type="button"
+          data-action="click->modal#close"
+          class="px-3 py-1 bg-gray-300 rounded-lg hover:bg-gray-400"
+        >
+          キャンセル
+        </button>
+
+        <%= f.submit "保存",
+              class: "px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>

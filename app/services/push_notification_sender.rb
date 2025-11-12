@@ -2,6 +2,8 @@ class PushNotificationSender
   def self.send(user, title:, body:)
     vapid = Rails.application.config.x.webpush_vapid
 
+    puts "📢 Sending push notifications to #{user.email} (#{user.push_subscriptions.count} subscriptions)"
+
     user.push_subscriptions.each do |sub|
       WebPush.payload_send(
         message: { title: title, body: body }.to_json,

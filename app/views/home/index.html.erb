@@ -1,13 +1,16 @@
 <% tweet_text = "今日も #SmokerBank で喫煙記録！\n合計#{number_to_currency(@total_amount, unit: '', precision: 0)}円使ってるみたい！\nhttps://smoker-bank.onrender.com/" %>
 <% tweet_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_text)}" %>
-<button
-  data-controller="push"
-  data-push-public-key-value="<%= ENV['VAPID_PUBLIC_KEY'] %>"
-  data-action="click->push#subscribe"
-  class="px-4 py-2 bg-green-600 text-white rounded"
->
-  通知を登録するのだ
-</button>
+<div data-controller="modal" class="inline-block">
+  <button 
+    data-action="click->modal#open"
+    class="px-4 py-2 bg-emerald-500 text-white rounded ml-3 hover:bg-emerald-600"
+  >
+    通知時刻を設定する
+  </button>
+
+  <!-- ✅ モーダルはパーシャルとして呼び出す -->
+  <%= render "home/notification_modal" %>
+</div>
 
 <div class="flex flex-col items-center flex-1 px-4 py-8">
   <div class="w-full max-w-md lg:max-w-5xl lg:flex lg:items-start lg:gap-6">
