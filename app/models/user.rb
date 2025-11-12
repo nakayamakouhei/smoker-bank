@@ -13,6 +13,9 @@ class User < ApplicationRecord
   has_many :custom_cigarettes, dependent: :destroy
   has_many :custom_cigarette_logs, dependent: :destroy
 
+  # プッシュ通知用
+  has_many :push_subscriptions, dependent: :destroy
+
   validates :name, presence: true
 
   # 合計金額・本数

@@ -28,6 +28,10 @@ Rails.application.routes.draw do
   # ログイン済みユーザー
   authenticated :user do
     root "home#index", as: :authenticated_root
+      # 通知時刻の更新
+    resource :user, only: [] do
+      patch :update_notification_time
+    end
   end
 
   resources :items, only: [ :index ]
@@ -53,4 +57,12 @@ Rails.application.routes.draw do
   resources :histories, only: [ :index ]
   resources :items, only: [ :index ]
   resource :profile, only: [ :edit, :update ]
+
+  # プッシュ通知用
+  resources :push_subscriptions, only: [ :create ]
+
+  # cron-job用
+  namespace :internal do
+    get "cron", to: "cron#run"
+  end
 end

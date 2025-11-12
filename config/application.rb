@@ -24,7 +24,9 @@ module Myapp
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    # 日本時間（JST）をRails全体で使う設定
+    config.time_zone = "Asia/Tokyo"
+    config.active_record.default_timezone = :utc
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

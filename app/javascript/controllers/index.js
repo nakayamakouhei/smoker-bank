@@ -13,5 +13,11 @@ application.register("loading", LoadingController)
 import MenuController from "./menu_controller"
 application.register("menu", MenuController)
 
+import ModalController from "./modal_controller"
+application.register("modal", ModalController)
+
+import PushController from "./push_controller"
+application.register("push", PushController)
+
 import TomSelectController from "./tom_select_controller"
 application.register("tom-select", TomSelectController)

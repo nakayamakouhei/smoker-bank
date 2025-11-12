@@ -1,31 +1,31 @@
-<div class="space-y-4">
+<div class="space-y-3">
   <% if current_user.current_cigarette.present? %>
     <% unit_price = current_user.current_cigarette.price %>
-    <%= form_with model: Smoke.new, url: smokes_path, method: :post, class: "space-y-4" do |f| %>
+    <%= form_with model: Smoke.new, url: smokes_path, method: :post, class: "space-y-3" do |f| %>
       <div class="flex items-center justify-between gap-3">
         <% price_label = unit_price.present? ? "箱数（#{number_to_currency(unit_price, unit: '', precision: 0)}円）" : "箱数" %>
         <%= f.label :packs, price_label, class: "text-sm font-semibold text-slate-700" %>
         <%= f.select :packs, (1..12).to_a,
               {},
-              class: "w-28 rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
+              class: "w-28 rounded-lg border border-gray-300 px-3 py-1.5 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
       </div>
       <%= f.submit "カウント",
             class: "w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:-translate-y-0.5 hover:bg-emerald-400 cursor-pointer" %>
     <% end %>
   <% elsif current_user.current_custom_cigarette.present? %>
     <% unit_price = current_user.current_custom_cigarette.price %>
-    <%= form_with model: CustomCigaretteLog.new, url: custom_cigarette_logs_path, method: :post, class: "space-y-4" do |f| %>
+    <%= form_with model: CustomCigaretteLog.new, url: custom_cigarette_logs_path, method: :post, class: "space-y-3" do |f| %>
       <div class="flex items-center justify-between gap-3">
         <% price_label = unit_price.present? ? "箱数（#{number_to_currency(unit_price, unit: '', precision: 0)}円）" : "箱数" %>
         <%= f.label :packs, price_label, class: "text-sm font-semibold text-slate-700" %>
         <%= f.select :packs, (1..12).to_a,
               {},
-              class: "w-28 rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
+              class: "w-28 rounded-lg border border-gray-300 px-3 py-1.5 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500" %>
       </div>
       <%= f.submit "カウント",
             class: "w-full rounded-lg bg-emerald-500 px-4 py-2 text-sm font-semibold text-white shadow transition hover:-translate-y-0.5 hover:bg-emerald-400 cursor-pointer" %>
     <% end %>
   <% else %>
-    <p class="rounded-lg bg-white px-4 py-3 text-center text-sm text-emerald-700 shadow">現在の銘柄が未選択です</p>
+    <p class="rounded-lg bg-white px-3 py-2.5 text-center text-sm text-emerald-700 shadow">現在の銘柄が未選択です</p>
   <% end %>
 </div>
