@@ -1,5 +1,4 @@
 class Internal::CronController < ActionController::API
-  skip_before_action :verify_authenticity_token
 
   def run
     token = params[:token].to_s
