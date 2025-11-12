@@ -1,6 +1,8 @@
 <% tweet_text = "今日も #SmokerBank で喫煙記録！\n合計#{number_to_currency(@total_amount, unit: '', precision: 0)}円使ってるみたい！\nhttps://smoker-bank.onrender.com/" %>
 <% tweet_url = "https://twitter.com/intent/tweet?text=#{ERB::Util.url_encode(tweet_text)}" %>
-<div class="flex flex-col items-center flex-1 px-4 py-8" data-controller="modal">
+<div class="flex flex-col items-center flex-1 px-4 py-8" data-controller="modal" data-modal-update-url-value="<%= update_notification_time_user_path %>">
+  <!-- ✅ モーダルはパーシャルとして呼び出す -->
+  <%= render "home/notification_modal" %>
   <div class="w-full max-w-md lg:max-w-5xl lg:flex lg:items-stretch lg:gap-6">
     <div class="w-full overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl lg:flex-1 lg:h-full flex flex-col">
     <div class="bg-gradient-to-br from-emerald-500 to-sky-500 px-6 py-5 text-left">
@@ -130,7 +132,4 @@
       </div>
     </div>
   <% end %>
-
-  <!-- ✅ モーダルはパーシャルとして呼び出す -->
-  <%= render "home/notification_modal" %>
 </div>
