@@ -1,25 +1,43 @@
-<div data-modal-target="overlay" class="hidden fixed inset-0 bg-black/50 flex justify-center items-center z-50">
-  <div data-modal-target="content" class="bg-white rounded-2xl p-6 w-80 relative">
-    <h2 class="text-lg font-bold mb-4 text-gray-800">通知の時刻を設定</h2>
+<div data-modal-target="overlay" class="hidden fixed inset-0 bg-black/60 backdrop-blur flex justify-center items-center z-50 px-4">
+  <div data-modal-target="content" class="w-full max-w-md overflow-hidden rounded-3xl bg-white shadow-2xl border border-white/60">
+    <div class="bg-gradient-to-r from-emerald-500 to-sky-500 px-6 py-5 text-white">
+      <p class="text-xs uppercase tracking-[0.2em] text-white/70">Notification</p>
+      <h2 class="text-2xl font-semibold mt-1">通知の時刻を設定</h2>
+      <p class="text-sm text-white/80">毎日のリマインダーで記録を習慣化しましょう。</p>
+    </div>
 
-    <%= form_with url: update_notification_time_user_path, method: :patch, local: true do |f| %>
-      <%= f.time_field :notification_time,
-            id: "notification_time",
-            class: "w-full border rounded-lg px-3 py-2 mb-4",
-            value: current_user.notification_time&.strftime('%H:%M') %>
+    <div class="p-6 space-y-5 bg-white">
+      <div class="rounded-2xl border border-slate-100 bg-slate-50 px-4 py-3 text-sm text-slate-700 flex gap-3 items-center">
+        <span class="text-emerald-500 text-xl">ℹ️</span>
+        <p>iPhoneの方は「ホーム画面に追加」で作成されたアイコンからアクセスした場合のみ通知設定が可能です。</p>
+      </div>
 
-      <div class="flex justify-end gap-2">
+      <div class="space-y-2">
+        <label for="notification_time" class="text-sm font-semibold text-slate-700">通知時刻</label>
+        <div class="flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 shadow-inner bg-white">
+          <span class="text-slate-400 text-xl">🕒</span>
+          <input
+            type="time"
+            id="notification_time"
+            class="w-full bg-transparent text-lg font-medium text-slate-800 focus:outline-none"
+            value="<%= current_user.notification_time&.strftime('%H:%M') %>">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-3 pt-2">
         <button
           type="button"
           data-action="click->modal#close"
-          class="px-3 py-1 bg-gray-300 rounded-lg hover:bg-gray-400"
-        >
+          class="rounded-2xl border border-slate-200 bg-white py-3 text-sm font-semibold text-slate-700 hover:bg-slate-50 transition">
           キャンセル
         </button>
-
-        <%= f.submit "保存",
-              class: "px-3 py-1 bg-green-600 text-white rounded-lg hover:bg-green-700" %>
+        <button
+          type="button"
+          data-action="click->modal#save"
+          class="rounded-2xl bg-emerald-500 py-3 text-sm font-semibold text-white shadow-lg shadow-emerald-200 transition hover:bg-emerald-400">
+          保存する
+        </button>
       </div>
-    <% end %>
+    </div>
   </div>
 </div>

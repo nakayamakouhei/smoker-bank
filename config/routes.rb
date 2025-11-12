@@ -59,7 +59,11 @@ Rails.application.routes.draw do
   resource :profile, only: [ :edit, :update ]
 
   # プッシュ通知用
-  resources :push_subscriptions, only: [ :create ]
+  resources :push_subscriptions, only: [ :create ] do
+    collection do
+      get :public_key
+    end
+  end
 
   # cron-job用
   namespace :internal do
