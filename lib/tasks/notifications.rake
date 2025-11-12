@@ -11,13 +11,15 @@ namespace :notifications do
       diff = now - notif_time
 
       # 予定時刻を過ぎて3分以内なら通知
-      if diff.between?(0, 3.minutes)
+      if diff.between?(0, 3.minutes) &&
+        (user.last_notified_at.nil? || user.last_notified_at.to_date < Date.current)
         begin
           PushNotificationSender.send(
             user,
             title: "今日の記録はつけましたか？",
             body: "#{user.name}さん、Smoker Bankで今日の喫煙をチェックしてみましょう"
           )
+          user.update!(last_notified_at: Time.current)
           puts "✅ Sent notification to #{user.email} (設定: #{user.notification_time.strftime('%H:%M')}, 現在: #{now.strftime('%H:%M')})"
         rescue => e
           puts "❌ Failed to send to #{user.email}: #{e.message}"

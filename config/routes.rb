@@ -60,4 +60,9 @@ Rails.application.routes.draw do
 
   # プッシュ通知用
   resources :push_subscriptions, only: [ :create ]
+
+  # cron-job用
+  namespace :internal do
+    get "cron", to: "cron#run"
+  end
 end
