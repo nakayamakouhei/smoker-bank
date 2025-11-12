@@ -1,3 +1,5 @@
+require "rake"
+
 class Internal::CronController < ActionController::API
 
   def run
@@ -5,6 +7,8 @@ class Internal::CronController < ActionController::API
     unless ActiveSupport::SecurityUtils.secure_compare(token, ENV.fetch("CRON_SECRET", ""))
       return head :unauthorized
     end
+
+    Rails.application.load_tasks
 
     Rake::Task["notifications:send_daily"].reenable
     Rake::Task["notifications:send_daily"].invoke
