@@ -1,0 +1,28 @@
+<turbo-frame id="home_recent_histories" class="w-full flex justify-center">
+  <% recent_histories = local_assigns.fetch(:recent_histories, []) %>
+  <div class="mt-6 w-full max-w-md lg:max-w-5xl overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-xl">
+    <div class="bg-gradient-to-r from-black via-slate-900 to-slate-800 px-6 py-4 text-left text-white">
+      <p class="text-xs font-semibold uppercase tracking-widest text-white/60">Recent Activity</p>
+      <h2 class="mt-1 text-xl font-bold">最近の履歴</h2>
+    </div>
+
+    <div class="px-6 py-6 bg-slate-50">
+      <% if recent_histories.any? %>
+        <div class="space-y-4">
+          <%= render "histories/list", histories: recent_histories %>
+        </div>
+        <div class="mt-6 flex flex-col gap-3 text-center sm:flex-row sm:justify-between sm:text-left">
+          <p class="text-sm text-slate-500">さらに詳しい履歴は履歴ページで確認できます。</p>
+          <%= link_to "もっと見る", histories_path,
+                data: { turbo: false },
+                class: "inline-flex items-center justify-center rounded-full bg-slate-900 px-6 py-2 text-sm font-semibold text-white shadow hover:-translate-y-0.5 hover:bg-slate-800 transition" %>
+        </div>
+      <% else %>
+        <div class="flex flex-col items-center gap-4 rounded-xl border border-dashed border-slate-200 bg-white px-6 py-12 text-center">
+          <p class="text-lg font-semibold text-slate-600">履歴がまだありません</p>
+          <p class="text-sm text-slate-500">購入を記録すると、ここに最新の 3 件が表示されます。</p>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</turbo-frame>

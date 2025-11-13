@@ -16,5 +16,14 @@ class HomeController < ApplicationController
     @next_year = @selected_year + 1
 
     @monthly_amounts = current_user.monthly_amounts(year: @selected_year)
+
+    smokes = current_user.smokes.includes(:cigarette)
+    custom_logs = current_user.custom_cigarette_logs.includes(:custom_cigarette)
+
+    # 履歴を結合して購入日降順で並べ替え
+    @recent_histories = (smokes + custom_logs)
+      .sort_by(&:bought_date)
+      .reverse
+      .first(3)
   end
 end
