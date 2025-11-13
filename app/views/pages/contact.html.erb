@@ -7,19 +7,33 @@
     </div>
 
     <div class="space-y-6 px-6 py-6">
-      <%= form_with url: send_contact_path, method: :post, class: "space-y-4" do |f| %>
+      <% if notice.present? %>
+        <div class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">
+          <%= notice %>
+        </div>
+      <% elsif alert.present? %>
+        <div class="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
+          <%= alert %>
+        </div>
+      <% end %>
+
+      <%= form_with model: @contact_form, url: send_contact_path, method: :post, local: true, class: "space-y-4" do |f| %>
         <div class="space-y-2">
           <%= f.label :name, "お名前", class: "text-sm font-semibold text-slate-800" %>
+          <span class="ml-1 text-xs text-red-500">必須</span>
           <%= f.text_field :name,
                 class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500",
-                placeholder: "例）山田 太郎" %>
+                placeholder: "例）山田 太郎",
+                required: true %>
         </div>
 
         <div class="space-y-2">
           <%= f.label :email, "メールアドレス", class: "text-sm font-semibold text-slate-800" %>
+          <span class="ml-1 text-xs text-red-500">必須</span>
           <%= f.email_field :email,
                 class: "w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500",
-                placeholder: "example@mail.com" %>
+                placeholder: "example@mail.com",
+                required: true %>
         </div>
 
         <div class="space-y-2">
