@@ -1,1 +1,13 @@
 <turbo-stream action="remove" target="<%= dom_id(@log) %>"></turbo-stream>
+
+<turbo-stream target="total_amount" action="replace">
+  <template>
+    <%= render "home/total_amount" %>
+  </template>
+</turbo-stream>
+
+<turbo-stream target="total_packs" action="replace">
+  <template>
+    <%= render "home/total_packs" %>
+  </template>
+</turbo-stream>
