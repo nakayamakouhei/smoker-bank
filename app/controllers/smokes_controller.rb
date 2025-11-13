@@ -19,6 +19,8 @@ class SmokesController < ApplicationController
   def destroy
     @smoke = current_user.smokes.find(params[:id])
     @smoke.destroy
+    @total_amount = current_user.total_amount
+    @total_packs = current_user.total_packs
     respond_to_destroy(@smoke)
   end
 

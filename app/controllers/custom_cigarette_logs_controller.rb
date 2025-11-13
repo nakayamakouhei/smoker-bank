@@ -15,6 +15,8 @@ class CustomCigaretteLogsController < ApplicationController
   def destroy
     @log = current_user.custom_cigarette_logs.find(params[:id])
     @log.destroy
+    @total_amount = current_user.total_amount
+    @total_packs = current_user.total_packs
     respond_to_destroy(@log)
   end
 

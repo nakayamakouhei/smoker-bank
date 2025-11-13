@@ -1,5 +1,7 @@
+<% amount = local_assigns[:total_amount] || @total_amount %>
+
 <div id="total_amount">
   <p class="text-2xl font-bold text-gray-800">
-    <%= number_to_currency(@total_amount, unit: "", precision: 0) %>円
+    <%= number_to_currency(amount, unit: "", precision: 0) %>円
   </p>
 </div>

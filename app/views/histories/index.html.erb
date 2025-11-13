@@ -6,17 +6,7 @@
       <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl">履歴</h1>
       <p class="mt-1 text-xs text-gray-500 sm:text-sm">購入記録を振り返り、期間や条件で絞り込みできます。</p>
     </div>
-
-    <div class="grid w-full gap-3 rounded-xl border border-green-200 bg-green-50 p-4 shadow-sm sm:grid-cols-2 md:w-auto md:min-w-[320px]">
-      <div class="flex flex-col items-center sm:items-start">
-        <span class="text-xs font-semibold uppercase tracking-wide text-green-600">合計金額</span>
-        <span class="text-xl font-bold text-green-700 sm:text-2xl"><%= number_to_currency(@total_amount, unit: "", precision: 0) %>円</span>
-      </div>
-      <div class="flex flex-col items-center sm:items-start">
-        <span class="text-xs font-semibold uppercase tracking-wide text-green-600">合計箱数</span>
-        <span class="text-xl font-bold text-green-700 sm:text-2xl"><%= @total_packs %>箱</span>
-      </div>
-    </div>
+    <%= render "histories/totals" %>
   </div>
 
   <!-- 戻るボタン -->

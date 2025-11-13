@@ -1,0 +1,13 @@
+<% amount = local_assigns[:total_amount] || @total_amount %>
+<% packs = local_assigns[:total_packs] || @total_packs %>
+
+<div id="histories_totals" class="grid w-full gap-3 rounded-xl border border-green-200 bg-green-50 p-4 shadow-sm sm:grid-cols-2 md:w-auto md:min-w-[320px]">
+  <div class="flex flex-col items-center sm:items-start">
+    <span class="text-xs font-semibold uppercase tracking-wide text-green-600">合計金額</span>
+    <span class="text-xl font-bold text-green-700 sm:text-2xl"><%= number_to_currency(amount, unit: "", precision: 0) %>円</span>
+  </div>
+  <div class="flex flex-col items-center sm:items-start">
+    <span class="text-xs font-semibold uppercase tracking-wide text-green-600">合計箱数</span>
+    <span class="text-xl font-bold text-green-700 sm:text-2xl"><%= packs %>箱</span>
+  </div>
+</div>
