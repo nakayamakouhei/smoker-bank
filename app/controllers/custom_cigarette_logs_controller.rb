@@ -1,6 +1,8 @@
 class CustomCigaretteLogsController < ApplicationController
   before_action :authenticate_user!
 
+  include HistoryDeletable
+
   def create
     current_user.custom_cigarette_logs.create!(
       custom_cigarette_id: current_user.current_custom_cigarette_id,
@@ -13,7 +15,7 @@ class CustomCigaretteLogsController < ApplicationController
   def destroy
     @log = current_user.custom_cigarette_logs.find(params[:id])
     @log.destroy
-    redirect_to histories_path(history_filter_params), notice: "履歴を削除しました"
+    respond_to_destroy(@log)
   end
 
   private

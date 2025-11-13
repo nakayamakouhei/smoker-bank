@@ -1,4 +1,6 @@
 class SmokesController < ApplicationController
+  include HistoryDeletable
+  
   def create
     # 箱数登録を押した時の挙動
     current_user.smokes.create!(
@@ -17,7 +19,7 @@ class SmokesController < ApplicationController
   def destroy
     @smoke = current_user.smokes.find(params[:id])
     @smoke.destroy
-    redirect_to histories_path(history_filter_params), notice: "履歴を削除しました"
+    respond_to_destroy(@smoke)
   end
 
   private
