@@ -49,8 +49,8 @@ class ApplicationController < ActionController::Base
   def require_cigarette_selection
     # Devise関連・銘柄選択関連ページは除外
     return if controller_name.in?(%w[sessions registrations passwords])
-    return if controller_name.in?(%w[cigarettes custom_cigarettes])
-    return if action_name.in?(%w[select update_selection new create index])
+    return if controller_name.in?(%w[cigarettes custom_cigarettes push_subscriptions current_custom_cigarettes current_cigarette])
+    return if action_name.in?(%w[select update_selection new index])
 
     # どちらの銘柄も未選択なら、選択画面へ強制リダイレクト
     unless selected_any_cigarette?

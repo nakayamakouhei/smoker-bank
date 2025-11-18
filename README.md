@@ -63,3 +63,8 @@ https://smoker-bank.onrender.com/
 
 ## ER図
 ![ER図](assets/images/er_diagram.png)
+
+## テスト（RSpec）
+Docker 開発環境起動後、以下でモデルスペックなどを実行できます。
+
+- `docker compose exec web bundle exec rspec`

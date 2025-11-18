@@ -1,6 +1,6 @@
 class SmokesController < ApplicationController
   include HistoryDeletable
-  
+
   def create
     # 箱数登録を押した時の挙動
     current_user.smokes.create!(
