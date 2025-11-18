@@ -21,3 +21,6 @@ application.register("push", PushController)
 
 import TomSelectController from "./tom_select_controller"
 application.register("tom-select", TomSelectController)
+
+import SmoothScrollController from "./smooth_scroll_controller"
+application.register("smooth-scroll", SmoothScrollController)

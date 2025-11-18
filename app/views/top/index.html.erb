@@ -32,13 +32,17 @@
 
         <%= link_to "新規登録", new_user_registration_path,
               class: "px-7 py-3 border border-emerald-400 text-emerald-600 font-semibold rounded-full bg-white hover:bg-emerald-50 hover:shadow transition duration-200" %>
+
+        <%= link_to "使い方を見る", "#howto",
+              data: { controller: "smooth-scroll", action: "click->smooth-scroll#scroll" },
+              class: "sm:hidden px-7 py-3 border border-emerald-200 text-emerald-700 font-semibold rounded-full bg-emerald-50 hover:bg-emerald-100 hover:shadow-inner transition duration-200" %>
       <% end %>
     </div>
 
   </div>
 
   <!-- 使い方セクション -->
-  <section class="w-full max-w-5xl mt-12 mb-16 space-y-6">
+  <section id="howto" class="w-full max-w-5xl mt-12 mb-16 space-y-6 scroll-mt-24">
     <div class="text-center space-y-2">
       <p class="text-xs sm:text-sm tracking-[0.2em] uppercase text-emerald-700 font-semibold">How to use</p>
       <h3 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900">Smoker Bank の使い方</h3>
