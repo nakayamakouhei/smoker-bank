@@ -53,10 +53,10 @@ Smoker Bankは、自分が吸ったタバコの本数を簡単に記録できる
 - 使用するフレームワーク（Ruby on Rails / 7.2.1）
 - データベース（PostgreSQL）
 - デプロイ先（Render）
-- 使用Gem（kaminari / Tailwind / Devise / omniauth-google-oauth2 / sendgrid-ruby）
+- 主な使用Gem（kaminari / Devise / omniauth-google-oauth2 / sendgrid-ruby / web-push）
 
 ## アプリURL
-https://smoker-bank.onrender.com/
+https://smoker-bank.com/
 
 ## 画面遷移図
 [画面遷移図（Figma）](https://www.figma.com/design/oS8wTW6u0WIxZXqUt9bmDp/smoker-bank?node-id=0-1&t=X7aWSsd2NaSFdeJh-1)
