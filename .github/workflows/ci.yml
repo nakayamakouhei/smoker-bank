@@ -45,11 +45,28 @@ jobs:
       - name: Install system dependencies
         run: sudo apt-get update && sudo apt-get install --no-install-recommends -y libpq-dev
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'yarn'
+
+      - name: Install JS dependencies
+        run: |
+          corepack enable
+          yarn install --frozen-lockfile
+
       - name: Prepare database
         env:
           RAILS_ENV: test
           DATABASE_URL: postgres://postgres:postgres@localhost:5432/smoker_bank_test
         run: bin/rails db:prepare
+
+      - name: Precompile assets
+        env:
+          RAILS_ENV: test
+          DATABASE_URL: postgres://postgres:postgres@localhost:5432/smoker_bank_test
+        run: bin/rails assets:precompile
 
       - name: Run RSpec
         env:
