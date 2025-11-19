@@ -7,11 +7,16 @@ export default class extends Controller {
     // メニュー外クリック用リスナーを追加
     this.outsideClickListener = this.handleOutsideClick.bind(this)
     document.addEventListener("click", this.outsideClickListener)
+
+    // Turboのスナップショット保存前にメニューを閉じる
+    this.beforeCacheListener = this.handleBeforeCache.bind(this)
+    document.addEventListener("turbo:before-cache", this.beforeCacheListener)
   }
 
   disconnect() {
     // コントローラー破棄時にクリーンアップ
     document.removeEventListener("click", this.outsideClickListener)
+    document.removeEventListener("turbo:before-cache", this.beforeCacheListener)
   }
 
   toggle(event) {
@@ -28,5 +33,10 @@ export default class extends Controller {
     ) {
       this.menuTarget.classList.add("hidden")
     }
+  }
+
+  handleBeforeCache() {
+    // キャッシュ保存時には必ず非表示にする
+    this.menuTarget.classList.add("hidden")
   }
 }
