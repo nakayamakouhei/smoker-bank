@@ -18,6 +18,8 @@ class Internal::CronController < ActionController::API
 
   private
 
+  # Rakeタスクの読み込みを1回のみにする
+  # 自動で読み込みされないため
   def load_rake_tasks_once
     return if defined?(@@tasks_loaded) && @@tasks_loaded
     Rails.application.load_tasks
