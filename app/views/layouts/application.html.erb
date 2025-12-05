@@ -9,11 +9,12 @@
     <meta name="vapid-public-key" content="<%= ENV['VAPID_PUBLIC_KEY'] %>">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
+    <!-- helperメソッド参照(gem) -->
     <%= display_meta_tags(default_meta_tags) %>
 
     <%= yield :head %>
 
-    <!-- Google tag (gtag.js) -->
+    <!-- Google Analytics (GA4) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-F8QPMFKJ71"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -78,6 +79,7 @@
       <span class="loading loading-spinner text-emerald-500 w-12 h-12"></span>
     </div>
 
+    <!-- 箱数カウントのフラッシュメッセージのみフェードアウト -->
     <script>
       document.addEventListener("turbo:load", function() {
         document.querySelectorAll('[data-auto-dismiss="true"]').forEach(function(el) {
