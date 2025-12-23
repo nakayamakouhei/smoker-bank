@@ -14,13 +14,18 @@
 
       <div class="space-y-2">
         <label for="notification_time" class="text-sm font-semibold text-slate-700">通知時刻</label>
+        <% notification_time_value = current_user.notification_time&.strftime('%H:%M') %>
+        <% notification_time_options = (0...24).flat_map { |hour| [0, 15, 30, 45].map { |minute| format("%02d:%02d", hour, minute) } } %>
         <div class="flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 shadow-inner bg-white">
           <span class="text-slate-400 text-xl">🕒</span>
-          <input
-            type="time"
+          <select
             id="notification_time"
             class="w-full bg-transparent text-lg font-medium text-slate-800 focus:outline-none"
-            value="<%= current_user.notification_time&.strftime('%H:%M') %>">
+          >
+            <% notification_time_options.each do |option| %>
+              <option value="<%= option %>" <%= "selected" if option == notification_time_value %>><%= option %></option>
+            <% end %>
+          </select>
         </div>
       </div>
 
